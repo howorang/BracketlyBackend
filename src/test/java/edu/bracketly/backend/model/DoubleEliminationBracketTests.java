@@ -4,6 +4,7 @@ import edu.bracketly.backend.utlis.MathUtils;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -42,7 +43,7 @@ public class DoubleEliminationBracketTests {
     @Test
     public void perfectBracketGenerationTest() {
 
-        List<Player> players = IntStream.range(1,17).mapToObj(p -> new Player(1L,"", false)).collect(Collectors.toList());
+        Set<Player> players = IntStream.range(1,17).mapToObj(p -> new Player((long) p,"", false)).collect(Collectors.toSet());
 
         DoubleEliminationBracket bracket = new DoubleEliminationBracket(players);
         System.out.println("shit");

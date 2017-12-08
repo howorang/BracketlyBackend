@@ -2,9 +2,7 @@ package edu.bracketly.backend.model;
 
 import edu.bracketly.backend.utlis.MathUtils;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Piotr Borczyk on 06.11.2017.
@@ -12,12 +10,12 @@ import java.util.List;
 
 public class DoubleEliminationBracket extends Bracket {
 
-    private Match higherBracketRoot;
-    private Match lowerBracketRoot;
+    private PlayerSlot higherBracketRoot;
+    private PlayerSlot lowerBracketRoot;
 
     private int numberOfPlayers;
 
-    protected DoubleEliminationBracket(List<Player> competitors) {
+    protected DoubleEliminationBracket(Set<Player> competitors) {
         super(competitors);
         numberOfPlayers = competitors.size();
         initBracket();
