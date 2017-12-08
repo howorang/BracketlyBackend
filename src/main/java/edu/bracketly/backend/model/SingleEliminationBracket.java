@@ -50,6 +50,7 @@ public class SingleEliminationBracket extends Bracket {
         int distance = leavesCount / byes;
         for (int i = 0; i < byes; i+=distance) {
             PlayerSlot playerSlot = leaves.get(i);
+            playerSlot.getParent().setLeaf(true);
             playerSlot.getParent().getChildren().clear();
         }
     }
