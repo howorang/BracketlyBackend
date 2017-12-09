@@ -22,12 +22,12 @@ public class DoubleEliminationBracket extends Bracket {
     }
 
     @Override
-    List<PlayerSlot> getStartingPlayerSlotsInPlayingOrder() {
+    public List<PlayerSlot> getStartingPlayerSlotsInPlayingOrder() {
         return null;
     }
 
     @Override
-    int getDistance(PlayerSlot one, PlayerSlot two) {
+    public int getDistance(PlayerSlot one, PlayerSlot two) {
         return 0;
     }
 

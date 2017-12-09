@@ -8,7 +8,7 @@ import java.util.Set;
  * Created by Piotr Borczyk on 06.11.2017.
  */
 
-abstract class Bracket {
+public abstract class Bracket {
     private int numberOfPlayers;
     PlayerSlot bracketRoot;
 
@@ -35,6 +35,6 @@ abstract class Bracket {
         return root;
     }
 
-    abstract List<PlayerSlot> getStartingPlayerSlotsInPlayingOrder();
-    abstract int getDistance(PlayerSlot one, PlayerSlot two);
+    public abstract List<PlayerSlot> getStartingPlayerSlotsInPlayingOrder();
+    public abstract int getDistance(PlayerSlot one, PlayerSlot two);
 }

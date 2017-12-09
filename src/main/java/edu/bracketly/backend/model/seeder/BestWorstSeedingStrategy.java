@@ -1,12 +1,16 @@
-package edu.bracketly.backend.model.bracket;
+package edu.bracketly.backend.model.seeder;
+
+import edu.bracketly.backend.model.bracket.Bracket;
+import edu.bracketly.backend.model.bracket.Player;
+import edu.bracketly.backend.model.bracket.PlayerSlot;
 
 import java.util.*;
 
-public class BestWorstSeeder extends Seeder {
+public class BestWorstSeedingStrategy implements SeedingStrategy {
     @Override
-    public void seed() {
-        List<Player> players = new ArrayList<>();
-        players.sort((o1, o2) -> (int) (o1.getRank() - o2.getRank()));
+    public void seed(Bracket bracket, Set<Player> players) {
+        List<Player> playersSorted = new ArrayList<>();
+        playersSorted.sort((o1, o2) -> (int) (o1.getRank() - o2.getRank()));
         Deque<Player> playerDeque = new ArrayDeque<>(players);
         players.clear();
         while (!playerDeque.isEmpty()) {

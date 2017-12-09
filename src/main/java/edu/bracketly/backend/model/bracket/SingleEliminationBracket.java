@@ -24,12 +24,12 @@ public class SingleEliminationBracket extends Bracket {
     }
 
     @Override
-    List<PlayerSlot> getStartingPlayerSlotsInPlayingOrder() {
+    public List<PlayerSlot> getStartingPlayerSlotsInPlayingOrder() {
         return getLeaves();
     }
 
     @Override
-    int getDistance(PlayerSlot one, PlayerSlot two) {
+    public int getDistance(PlayerSlot one, PlayerSlot two) {
         return getRelativePlayerSlotDistance(one, two);
     }
 
