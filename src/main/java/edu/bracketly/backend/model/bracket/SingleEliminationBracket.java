@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 public class SingleEliminationBracket extends Bracket {
-    protected SingleEliminationBracket(int numberOfPlayers) {
+    public SingleEliminationBracket(int numberOfPlayers) {
         super(numberOfPlayers);
         int perfectBracketSize = MathUtils.nextGreaterPowerOfTwo(numberOfPlayers);
         int byes = perfectBracketSize - numberOfPlayers;
