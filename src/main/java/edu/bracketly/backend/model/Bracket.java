@@ -8,11 +8,11 @@ import java.util.Set;
  */
 
 public abstract class Bracket {
-    protected Set<Player> competitors;
+    private int numberOfPlayers;
     PlayerSlot bracketRoot;
 
-    protected Bracket(Set<Player> competitors) {
-        this.competitors = competitors;
+    protected Bracket(int numberOfPlayers) {
+        this.numberOfPlayers = numberOfPlayers;
     }
 
     protected PlayerSlot generatePerfectBracket(int bracketSize) {

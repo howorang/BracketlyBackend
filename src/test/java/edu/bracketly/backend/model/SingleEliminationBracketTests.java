@@ -11,7 +11,7 @@ public class SingleEliminationBracketTests {
 
     @Test
     public void testByeSpread() {
-        Set<Player> players = IntStream.range(1,17).mapToObj(p -> new Player((long) p,"", false)).collect(Collectors.toSet());
+        Set<Player> players = IntStream.range(1,6).mapToObj(p -> new Player((long) p,"", false)).collect(Collectors.toSet());
 
         SingleEliminationBracket bracket = new SingleEliminationBracket(players);
     }

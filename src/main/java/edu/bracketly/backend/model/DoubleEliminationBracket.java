@@ -15,9 +15,8 @@ public class DoubleEliminationBracket extends Bracket {
 
     private int numberOfPlayers;
 
-    protected DoubleEliminationBracket(Set<Player> competitors) {
-        super(competitors);
-        numberOfPlayers = competitors.size();
+    protected DoubleEliminationBracket(int numberOfPlayers) {
+        super(numberOfPlayers);
         initBracket();
     }
 

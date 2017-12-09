@@ -9,9 +9,8 @@ import java.util.List;
 import java.util.Set;
 
 public class SingleEliminationBracket extends Bracket {
-    protected SingleEliminationBracket(Set<Player> competitors) {
-        super(competitors);
-        int numberOfPlayers = competitors.size();
+    protected SingleEliminationBracket(int numberOfPlayers) {
+        super(numberOfPlayers);
         int perfectBracketSize = MathUtils.nextGreaterPowerOfTwo(numberOfPlayers);
         int byes = perfectBracketSize - numberOfPlayers;
         bracketRoot = generatePerfectBracket(perfectBracketSize);
