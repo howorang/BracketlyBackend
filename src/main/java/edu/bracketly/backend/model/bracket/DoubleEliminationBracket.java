@@ -1,7 +1,8 @@
-package edu.bracketly.backend.model;
+package edu.bracketly.backend.model.bracket;
 
 import edu.bracketly.backend.utlis.MathUtils;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -15,9 +16,19 @@ public class DoubleEliminationBracket extends Bracket {
 
     private int numberOfPlayers;
 
-    protected DoubleEliminationBracket(int numberOfPlayers) {
+    public DoubleEliminationBracket(int numberOfPlayers) {
         super(numberOfPlayers);
         initBracket();
+    }
+
+    @Override
+    List<PlayerSlot> getStartingPlayerSlotsInPlayingOrder() {
+        return null;
+    }
+
+    @Override
+    int getDistance(PlayerSlot one, PlayerSlot two) {
+        return 0;
     }
 
     private void initBracket() {

@@ -1,8 +1,9 @@
 package edu.bracketly.backend.model;
 
+import edu.bracketly.backend.model.bracket.Player;
+import edu.bracketly.backend.model.bracket.SingleEliminationBracket;
 import org.junit.Test;
 
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -11,8 +12,7 @@ public class SingleEliminationBracketTests {
 
     @Test
     public void testByeSpread() {
-        Set<Player> players = IntStream.range(1,6).mapToObj(p -> new Player((long) p,"", false)).collect(Collectors.toSet());
 
-        SingleEliminationBracket bracket = new SingleEliminationBracket(players);
+        SingleEliminationBracket bracket = new SingleEliminationBracket(16);
     }
 }

@@ -1,9 +1,10 @@
 package edu.bracketly.backend.model;
 
+import edu.bracketly.backend.model.bracket.DoubleEliminationBracket;
+import edu.bracketly.backend.model.bracket.Player;
 import edu.bracketly.backend.utlis.MathUtils;
 import org.junit.Test;
 
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -43,9 +44,7 @@ public class DoubleEliminationBracketTests {
     @Test
     public void perfectBracketGenerationTest() {
 
-        Set<Player> players = IntStream.range(1,17).mapToObj(p -> new Player((long) p,"", false)).collect(Collectors.toSet());
-
-        DoubleEliminationBracket bracket = new DoubleEliminationBracket(players);
-        System.out.println("shit");
+        DoubleEliminationBracket bracket = new DoubleEliminationBracket(16);
+        System.out.println("done");
     }
 }

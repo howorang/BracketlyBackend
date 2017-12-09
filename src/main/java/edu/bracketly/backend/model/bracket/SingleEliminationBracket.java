@@ -1,10 +1,11 @@
-package edu.bracketly.backend.model;
+package edu.bracketly.backend.model.bracket;
 
 import edu.bracketly.backend.tree.Node;
 import edu.bracketly.backend.tree.Traverser;
 import edu.bracketly.backend.utlis.MathUtils;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -20,6 +21,16 @@ public class SingleEliminationBracket extends Bracket {
         }
         List<PlayerSlot> leaves = getLeaves();
         System.out.printf("ds");
+    }
+
+    @Override
+    List<PlayerSlot> getStartingPlayerSlotsInPlayingOrder() {
+        return getLeaves();
+    }
+
+    @Override
+    int getDistance(PlayerSlot one, PlayerSlot two) {
+        return getRelativePlayerSlotDistance(one, two);
     }
 
     private int getRelativePlayerSlotDistance(PlayerSlot one, PlayerSlot two) {

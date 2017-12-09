@@ -1,4 +1,4 @@
-package edu.bracketly.backend.model;
+package edu.bracketly.backend.model.bracket;
 
 import edu.bracketly.backend.tree.Node;
 import lombok.*;

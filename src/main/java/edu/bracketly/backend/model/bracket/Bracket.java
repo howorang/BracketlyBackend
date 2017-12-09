@@ -1,13 +1,14 @@
-package edu.bracketly.backend.model;
+package edu.bracketly.backend.model.bracket;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
  * Created by Piotr Borczyk on 06.11.2017.
  */
 
-public abstract class Bracket {
+abstract class Bracket {
     private int numberOfPlayers;
     PlayerSlot bracketRoot;
 
@@ -33,4 +34,7 @@ public abstract class Bracket {
         }
         return root;
     }
+
+    abstract List<PlayerSlot> getStartingPlayerSlotsInPlayingOrder();
+    abstract int getDistance(PlayerSlot one, PlayerSlot two);
 }
