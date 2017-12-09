@@ -11,18 +11,17 @@ public class SingleEliminationBracket extends Bracket {
     public SingleEliminationBracket(int numberOfPlayers) {
         super(numberOfPlayers);
         int perfectBracketSize = MathUtils.nextGreaterPowerOfTwo(numberOfPlayers);
+        numberOfRounds = (int) MathUtils.log2(numberOfPlayers);
         int byes = perfectBracketSize - numberOfPlayers;
         bracketRoot = generatePerfectBracket(perfectBracketSize);
         setMatchNumbers();
         if (byes != 0) {
             cutOutByes(byes);
         }
-        List<Seat> leaves = getLeaves();
-        System.out.printf("ds");
     }
 
     @Override
-    public List<Seat> getStartingPlayerSlotsInPlayingOrder() {
+    public List<Seat> getStartingSeatsInPlayingOrder() {
         return getLeaves();
     }
 

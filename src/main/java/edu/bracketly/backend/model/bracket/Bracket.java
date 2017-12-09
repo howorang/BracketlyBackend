@@ -11,8 +11,9 @@ import java.util.List;
 
 public abstract class Bracket {
     private int numberOfPlayers;
-    Seat bracketRoot;
-    private FlowHandler flowHandler;
+    protected int numberOfRounds;
+    protected Seat bracketRoot;
+    protected FlowHandler flowHandler;
 
     public FlowHandler getFlowHandler() {
         return flowHandler;
@@ -20,6 +21,18 @@ public abstract class Bracket {
 
     public void setFlowHandler(FlowHandler flowHandler) {
         this.flowHandler = flowHandler;
+    }
+
+    public Seat getBracketRoot() {
+        return bracketRoot;
+    }
+
+    public void setBracketRoot(Seat bracketRoot) {
+        this.bracketRoot = bracketRoot;
+    }
+
+    public int getNumberOfRounds() {
+        return numberOfRounds;
     }
 
     protected Bracket(int numberOfPlayers) {
@@ -45,6 +58,6 @@ public abstract class Bracket {
         return root;
     }
 
-    public abstract List<Seat> getStartingPlayerSlotsInPlayingOrder();
+    public abstract List<Seat> getStartingSeatsInPlayingOrder();
     public abstract int getDistance(Seat one, Seat two);
 }

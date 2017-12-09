@@ -18,7 +18,7 @@ public class BestWorstSeedingStrategy implements SeedingStrategy {
             if (!playerDeque.isEmpty())players.add(playerDeque.pollFirst());
         }
 
-        Iterator<Seat> playerSlotIterator = bracket.getStartingPlayerSlotsInPlayingOrder().iterator();
+        Iterator<Seat> playerSlotIterator = bracket.getStartingSeatsInPlayingOrder().iterator();
         for (Player player : players) {
             playerSlotIterator.next().setPlayer(player);
         }

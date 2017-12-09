@@ -11,7 +11,7 @@ public class RandomSeedingStrategy implements SeedingStrategy {
     public void seed(Bracket bracket, Set<Player> players) {
         List<Player> playersRandom = new ArrayList<>(players);
         Collections.shuffle(playersRandom);
-        Iterator<Seat> playerSlotIterator = bracket.getStartingPlayerSlotsInPlayingOrder().iterator();
+        Iterator<Seat> playerSlotIterator = bracket.getStartingSeatsInPlayingOrder().iterator();
         for (Player player : playersRandom) {
             playerSlotIterator.next().setPlayer(player);
         }
