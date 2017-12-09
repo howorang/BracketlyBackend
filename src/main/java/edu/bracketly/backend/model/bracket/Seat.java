@@ -12,10 +12,10 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString(of = {"number", "depth"})
-public class PlayerSlot implements Node {
+public class Seat implements Node {
     private Player player;
-    private Set<PlayerSlot> children;
-    private PlayerSlot parent;
+    private Set<Seat> children;
+    private Seat parent;
     private boolean isLeaf;
     private int depth;
     private int number;

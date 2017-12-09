@@ -3,7 +3,6 @@ package edu.bracketly.backend.model.bracket;
 import edu.bracketly.backend.utlis.MathUtils;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Piotr Borczyk on 06.11.2017.
@@ -11,8 +10,7 @@ import java.util.Set;
 
 public class DoubleEliminationBracket extends Bracket {
 
-    private PlayerSlot higherBracketRoot;
-    private PlayerSlot lowerBracketRoot;
+    private Seat lowerBracketRoot;
 
     private int numberOfPlayers;
 
@@ -22,12 +20,12 @@ public class DoubleEliminationBracket extends Bracket {
     }
 
     @Override
-    public List<PlayerSlot> getStartingPlayerSlotsInPlayingOrder() {
+    public List<Seat> getStartingPlayerSlotsInPlayingOrder() {
         return null;
     }
 
     @Override
-    public int getDistance(PlayerSlot one, PlayerSlot two) {
+    public int getDistance(Seat one, Seat two) {
         return 0;
     }
 
@@ -35,7 +33,7 @@ public class DoubleEliminationBracket extends Bracket {
         int perfectBracketSize = MathUtils.nextGreaterPowerOfTwo(numberOfPlayers);
         int byes = perfectBracketSize - numberOfPlayers;
 
-       higherBracketRoot = generatePerfectBracket(perfectBracketSize);
+       bracketRoot = generatePerfectBracket(perfectBracketSize);
        return;
     }
 }

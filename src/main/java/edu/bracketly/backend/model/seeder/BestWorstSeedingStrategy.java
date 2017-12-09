@@ -2,7 +2,7 @@ package edu.bracketly.backend.model.seeder;
 
 import edu.bracketly.backend.model.bracket.Bracket;
 import edu.bracketly.backend.model.bracket.Player;
-import edu.bracketly.backend.model.bracket.PlayerSlot;
+import edu.bracketly.backend.model.bracket.Seat;
 
 import java.util.*;
 
@@ -18,7 +18,7 @@ public class BestWorstSeedingStrategy implements SeedingStrategy {
             if (!playerDeque.isEmpty())players.add(playerDeque.pollFirst());
         }
 
-        Iterator<PlayerSlot> playerSlotIterator = bracket.getStartingPlayerSlotsInPlayingOrder().iterator();
+        Iterator<Seat> playerSlotIterator = bracket.getStartingPlayerSlotsInPlayingOrder().iterator();
         for (Player player : players) {
             playerSlotIterator.next().setPlayer(player);
         }

@@ -1,8 +1,9 @@
 package edu.bracketly.backend.model.bracket;
 
+import edu.bracketly.backend.model.flow.FlowHandler;
+
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Piotr Borczyk on 06.11.2017.
@@ -10,18 +11,27 @@ import java.util.Set;
 
 public abstract class Bracket {
     private int numberOfPlayers;
-    PlayerSlot bracketRoot;
+    Seat bracketRoot;
+    private FlowHandler flowHandler;
+
+    public FlowHandler getFlowHandler() {
+        return flowHandler;
+    }
+
+    public void setFlowHandler(FlowHandler flowHandler) {
+        this.flowHandler = flowHandler;
+    }
 
     protected Bracket(int numberOfPlayers) {
         this.numberOfPlayers = numberOfPlayers;
     }
 
-    protected PlayerSlot generatePerfectBracket(int bracketSize) {
+    protected Seat generatePerfectBracket(int bracketSize) {
         return generatePerfectBracket(bracketSize, 0, null);
     }
 
-    private PlayerSlot generatePerfectBracket(int bracketSize, int depth, PlayerSlot parent) {
-        PlayerSlot root =  new PlayerSlot();
+    private Seat generatePerfectBracket(int bracketSize, int depth, Seat parent) {
+        Seat root =  new Seat();
         root.setDepth(depth);
         root.setChildren(new HashSet<>());
         root.setParent(parent);
@@ -35,6 +45,6 @@ public abstract class Bracket {
         return root;
     }
 
-    public abstract List<PlayerSlot> getStartingPlayerSlotsInPlayingOrder();
-    public abstract int getDistance(PlayerSlot one, PlayerSlot two);
+    public abstract List<Seat> getStartingPlayerSlotsInPlayingOrder();
+    public abstract int getDistance(Seat one, Seat two);
 }
