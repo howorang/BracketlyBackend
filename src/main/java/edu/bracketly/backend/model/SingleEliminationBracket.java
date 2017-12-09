@@ -19,6 +19,8 @@ public class SingleEliminationBracket extends Bracket {
         if (byes != 0) {
             cutOutByes(byes);
         }
+        List<PlayerSlot> leaves = getLeaves();
+        System.out.printf("ds");
     }
 
     private int getRelativePlayerSlotDistance(PlayerSlot one, PlayerSlot two) {
@@ -48,10 +50,15 @@ public class SingleEliminationBracket extends Bracket {
         List<PlayerSlot> leaves = getLeaves();
         int leavesCount = leaves.size();
         int distance = leavesCount / byes;
-        for (int i = 0; i < byes; i+=distance) {
+
+        int byesCut = 0;
+        int i = 0;
+        while (byesCut != byes) {
             PlayerSlot playerSlot = leaves.get(i);
             playerSlot.getParent().setLeaf(true);
             playerSlot.getParent().getChildren().clear();
+            i += distance;
+            byesCut++;
         }
     }
 
