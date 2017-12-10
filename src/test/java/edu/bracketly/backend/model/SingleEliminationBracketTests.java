@@ -5,6 +5,7 @@ import edu.bracketly.backend.model.bracket.Seat;
 import edu.bracketly.backend.model.bracket.SingleEliminationBracket;
 import edu.bracketly.backend.model.flow.Match;
 import edu.bracketly.backend.model.seeder.RandomSeedingStrategy;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Set;
@@ -33,15 +34,7 @@ public class SingleEliminationBracketTests {
         Seat winnerSeat3 = match2.getSeats().iterator().next();
         bracket.getFlowHandler().markAsPlayed(match2.getId(), winnerSeat3.getNumber());
 
-        Match match3 = bracket.getFlowHandler().playNextMatch();
-        Seat winnerSeat4 = match3.getSeats().iterator().next();
-        bracket.getFlowHandler().markAsPlayed(match3.getId(), winnerSeat4.getNumber());
-
-        Match match4 = bracket.getFlowHandler().playNextMatch();
-        Seat winnerSeat5 = match4.getSeats().iterator().next();
-        bracket.getFlowHandler().markAsPlayed(match4.getId(), winnerSeat5.getNumber());
-
-
+        Assert.assertEquals(winnerSeat3.getPlayer(), bracket.getBracketRoot().getPlayer());
 
     }
 }
