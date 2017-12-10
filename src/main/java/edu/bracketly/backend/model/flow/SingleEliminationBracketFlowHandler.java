@@ -5,7 +5,9 @@ import edu.bracketly.backend.model.bracket.SingleEliminationBracket;
 import edu.bracketly.backend.tree.Traverser;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -20,13 +22,25 @@ public class SingleEliminationBracketFlowHandler implements FlowHandler {
     public SingleEliminationBracketFlowHandler(SingleEliminationBracket bracket) {
         this.bracket = bracket;
         numberOfRounds = bracket.getNumberOfRounds();
-        rounds.add(initRound(currentRoundNumber));
+        initRounds();
     }
 
-    private List<Match> initRound(int roundNumber) {
-        List<Seat> winnerSeats = getSeatsByDepth(numberOfRounds - roundNumber);
+    private void initRounds() {
+        Map<Integer, List<Seat>> seatsByDepth = new HashMap<>();
+        new Traverser(bracket.getBracketRoot(), node -> {
+            Seat seat =(Seat)node;
+            seatsByDepth.putIfAbsent(seat.getDepth(), new ArrayList<>());
+            seatsByDepth.get(seat.getDepth()).add(seat);
+        }).traverse();
+
+        for (int i = 1; i <= numberOfRounds; i++) {
+            rounds.add(initRound(i, seatsByDepth.get(numberOfRounds - i)));
+        }
+    }
+
+    private List<Match> initRound(int roundNumber, List<Seat> seats) {
         List<Match> matches = new ArrayList<>();
-        for (Seat winnerSeat : winnerSeats) {
+        for (Seat winnerSeat : seats) {
             Match match = new Match();
             match.setSeats(winnerSeat.getChildren());
             match.setWinnerSeat(winnerSeat);
@@ -102,7 +116,7 @@ public class SingleEliminationBracketFlowHandler implements FlowHandler {
     }
 
     private void startNewRound() {
-        rounds.add(initRound(++currentRoundNumber));
+        ++currentRoundNumber;
     }
 
     private List<Match> getCurrentRound() {
