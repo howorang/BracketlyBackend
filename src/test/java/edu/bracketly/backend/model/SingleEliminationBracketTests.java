@@ -3,18 +3,25 @@ package edu.bracketly.backend.model;
 import edu.bracketly.backend.model.bracket.Player;
 import edu.bracketly.backend.model.bracket.Seat;
 import edu.bracketly.backend.model.bracket.SingleEliminationBracket;
+import edu.bracketly.backend.model.flow.BRACKET_STATUS;
 import edu.bracketly.backend.model.flow.BracketIsPlayedException;
 import edu.bracketly.backend.model.flow.Match;
 import edu.bracketly.backend.model.seeder.RandomSeedingStrategy;
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 
+import static org.junit.Assert.*;
+
 public class SingleEliminationBracketTests {
+
+    @Test
+    public void newBracketStatus() {
+        SingleEliminationBracket bracket = new SingleEliminationBracket(2);
+        assertTrue(bracket.getFlowHandler().getBracketStatus() == BRACKET_STATUS.LIVE);
+    }
 
     @Test
     public void playSimpleTournament() {
@@ -35,7 +42,8 @@ public class SingleEliminationBracketTests {
         Seat winnerSeat3 = match2.getSeats().iterator().next();
         bracket.getFlowHandler().markAsPlayed(match2.getId(), winnerSeat3.getNumber());
 
-        Assert.assertEquals(winnerSeat3.getPlayer(), bracket.getBracketRoot().getPlayer());
+        assertEquals(winnerSeat3.getPlayer(), bracket.getBracketRoot().getPlayer());
+        assertTrue(bracket.getFlowHandler().getBracketStatus() == BRACKET_STATUS.PLAYED);
 
     }
 
