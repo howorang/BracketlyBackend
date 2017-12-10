@@ -95,7 +95,7 @@ public class SingleEliminationBracketFlowHandler implements FlowHandler {
 
     private void updateBracketStatusIfNeeded() {
         if (currentRoundNumber == bracket.getNumberOfRounds()) {
-            if (getCurrentRound().stream().anyMatch(match -> match.getMatchStatus() == MATCH_STATUS.LIVE && match.getMatchStatus() == MATCH_STATUS.NOT_PLAYED)) {
+            if (getCurrentRound().stream().noneMatch(match -> match.getMatchStatus() == MATCH_STATUS.LIVE && match.getMatchStatus() == MATCH_STATUS.NOT_PLAYED)) {
                 bracket_status = BRACKET_STATUS.PLAYED;
             }
         }
