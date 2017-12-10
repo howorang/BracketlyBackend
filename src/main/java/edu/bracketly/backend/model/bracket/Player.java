@@ -10,12 +10,10 @@ import lombok.Data;
 public class Player {
     private Long id;
     private String name;
-    private boolean hasWon;
     private long rank;
 
-    public Player(Long id, String name, boolean hasWon) {
+    public Player(Long id, String name) {
         this.id = id;
         this.name = name;
-        this.hasWon = hasWon;
     }
 }

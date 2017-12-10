@@ -13,7 +13,7 @@ public class Match {
     private long id;
     private Set<Seat> seats;
     private Seat winnerSeat;
-    private MATCH_STATUS matchStatus;
+    private MATCH_STATUS matchStatus = MATCH_STATUS.NOT_PLAYED;
 
     @Override
     public boolean equals(Object o) {

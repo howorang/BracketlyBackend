@@ -1,6 +1,5 @@
 package edu.bracketly.backend.model.flow;
 
-import com.google.common.collect.Lists;
 import edu.bracketly.backend.model.bracket.Seat;
 import edu.bracketly.backend.model.bracket.SingleEliminationBracket;
 import edu.bracketly.backend.tree.Traverser;
@@ -32,6 +31,7 @@ public class SingleEliminationBracketFlowHandler implements FlowHandler {
             match.setSeats(winnerSeat.getChildren());
             match.setWinnerSeat(winnerSeat);
             match.setId(getMatchId(winnerSeat, match.getSeats()));
+            matches.add(match);
         }
         return matches;
     }
@@ -52,7 +52,7 @@ public class SingleEliminationBracketFlowHandler implements FlowHandler {
             if (seat.getDepth() == depth) {
                 seats.add(seat);
             }
-        });
+        }).traverse();
         return seats;
     }
 
@@ -82,10 +82,12 @@ public class SingleEliminationBracketFlowHandler implements FlowHandler {
     }
 
     @Override
-    public void markAsPlayed(Long matchId) {
+    public void markAsPlayed(Long matchId, int winnigSeatNumber) {
         Optional<Match> matchOptional = getCurrentRound().stream().filter(match -> match.getId() == matchId).findFirst();
         if (matchOptional.isPresent()) {
             Match match = matchOptional.get();
+            Optional<Seat> winningSeat = match.getSeats().stream().filter(seat -> seat.getNumber() == winnigSeatNumber).findFirst();
+            match.getWinnerSeat().setPlayer(winningSeat.get().getPlayer());
             match.setMatchStatus(MATCH_STATUS.PLAYED);
         } else throw new RuntimeException("Match not found in current round");
         updateBracketStatusIfNeeded();

@@ -1,5 +1,6 @@
 package edu.bracketly.backend.model.bracket;
 
+import edu.bracketly.backend.model.flow.SingleEliminationBracketFlowHandler;
 import edu.bracketly.backend.tree.Node;
 import edu.bracketly.backend.tree.Traverser;
 import edu.bracketly.backend.utlis.MathUtils;
@@ -18,6 +19,7 @@ public class SingleEliminationBracket extends Bracket {
         if (byes != 0) {
             cutOutByes(byes);
         }
+        flowHandler = new SingleEliminationBracketFlowHandler(this);
     }
 
     @Override
