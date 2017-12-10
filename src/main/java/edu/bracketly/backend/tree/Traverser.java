@@ -31,6 +31,7 @@ public class Traverser {
         public void traverse(Node root) {
             Queue<Node> queue = new ArrayDeque<>();
             queue.add(root);
+            onEnter.enter(root);
             while (!queue.isEmpty()) {
                 for (Node node : queue.remove().getChildren()) {
                     onEnter.enter(node);
@@ -44,6 +45,7 @@ public class Traverser {
             Queue<Node> queue = new ArrayDeque<>();
             Stack<Node> stack = new Stack<>();
             queue.add(root);
+            stack.add(root);
             while (!queue.isEmpty()) {
                 for (Node node : queue.remove().getChildren()) {
                     queue.add(node);
