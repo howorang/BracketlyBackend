@@ -28,17 +28,17 @@ public class SingleEliminationBracketFlowHandler implements FlowHandler {
     private void initRounds() {
         Map<Integer, List<Seat>> seatsByDepth = new HashMap<>();
         new Traverser(bracket.getBracketRoot(), node -> {
-            Seat seat =(Seat)node;
+            Seat seat = (Seat) node;
             seatsByDepth.putIfAbsent(seat.getDepth(), new ArrayList<>());
             seatsByDepth.get(seat.getDepth()).add(seat);
         }).traverse();
 
         for (int i = 1; i <= numberOfRounds; i++) {
-            rounds.add(initRound(i, seatsByDepth.get(numberOfRounds - i)));
+            rounds.add(initRound(seatsByDepth.get(numberOfRounds - i)));
         }
     }
 
-    private List<Match> initRound(int roundNumber, List<Seat> seats) {
+    private List<Match> initRound(List<Seat> seats) {
         List<Match> matches = new ArrayList<>();
         for (Seat winnerSeat : seats) {
             Match match = new Match();
@@ -58,18 +58,7 @@ public class SingleEliminationBracketFlowHandler implements FlowHandler {
         id.append(winnerSeat.getNumber());
         return Long.parseLong(id.toString());
     }
-
-    private List<Seat> getSeatsByDepth(int depth) {
-        List<Seat> seats = new ArrayList<>();
-        new Traverser(bracket.getBracketRoot(), node -> {
-            Seat seat =(Seat)node;
-            if (seat.getDepth() == depth) {
-                seats.add(seat);
-            }
-        }).traverse();
-        return seats;
-    }
-
+    
     @Override
     public Match playNextMatch() throws BracketIsPlayedException {
         List<Match> currentRound = rounds.get(currentRoundNumber - 1);
