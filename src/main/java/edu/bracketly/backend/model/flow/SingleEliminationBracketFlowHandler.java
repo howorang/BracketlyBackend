@@ -1,5 +1,6 @@
 package edu.bracketly.backend.model.flow;
 
+import com.google.common.collect.Lists;
 import edu.bracketly.backend.model.bracket.Seat;
 import edu.bracketly.backend.model.bracket.SingleEliminationBracket;
 import edu.bracketly.backend.tree.Traverser;
@@ -7,18 +8,18 @@ import edu.bracketly.backend.tree.Traverser;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public class SingleEliminationBracketFlowHandler implements FlowHandler {
 
     private SingleEliminationBracket bracket;
-    private int currentRoundNumber;
+    private int currentRoundNumber = 1;
     private int numberOfRounds;
-    private List<List<Match>> rounds;
+    private List<List<Match>> rounds = new ArrayList<>();
+    private BRACKET_STATUS bracket_status = BRACKET_STATUS.LIVE;
 
     public SingleEliminationBracketFlowHandler(SingleEliminationBracket bracket) {
         this.bracket = bracket;
-        rounds = new ArrayList<>();
-        currentRoundNumber = 1;
         numberOfRounds = bracket.getNumberOfRounds();
         rounds.add(initRound(currentRoundNumber));
     }
@@ -29,8 +30,19 @@ public class SingleEliminationBracketFlowHandler implements FlowHandler {
         for (Seat winnerSeat : winnerSeats) {
             Match match = new Match();
             match.setSeats(winnerSeat.getChildren());
+            match.setWinnerSeat(winnerSeat);
+            match.setId(getMatchId(winnerSeat, match.getSeats()));
         }
         return matches;
+    }
+
+    private long getMatchId(Seat winnerSeat, Set<Seat> seats) {
+        StringBuilder id = new StringBuilder();
+        for (Seat seat : seats) {
+            id.append(seat.getNumber());
+        }
+        id.append(winnerSeat.getNumber());
+        return Long.parseLong(id.toString());
     }
 
     private List<Seat> getSeatsByDepth(int depth) {
@@ -45,7 +57,7 @@ public class SingleEliminationBracketFlowHandler implements FlowHandler {
     }
 
     @Override
-    public Match playNextMatch() {
+    public Match playNextMatch() throws BracketIsPlayedException {
         List<Match> currentRound = rounds.get(currentRoundNumber - 1);
         Optional<Match> matchOptional = currentRound.stream().filter(match -> match.getMatchStatus() == MATCH_STATUS.NOT_PLAYED).findFirst();
         if (matchOptional.isPresent()) {
@@ -53,19 +65,38 @@ public class SingleEliminationBracketFlowHandler implements FlowHandler {
             match.setMatchStatus(MATCH_STATUS.LIVE);
             return match;
         } else {
-            Optional<Match> anyLiveMatch = currentRound.stream().filter(match -> match.getMatchStatus() == MATCH_STATUS.LIVE).findAny();
-            if (anyLiveMatch.isPresent()) {
+            if (currentRound.stream().anyMatch(match -> match.getMatchStatus() == MATCH_STATUS.LIVE)) {
                 return null;
             } else {
-                startNewRound();
-                return playNextMatch();
+                if (bracket_status != BRACKET_STATUS.PLAYED) {
+                    startNewRound();
+                    return playNextMatch();
+                } else throw new BracketIsPlayedException();
             }
         }
     }
 
-    public void markAsPlayes(Match match) {
-        Match matchManaged = getCurrentRound().get(getCurrentRound().lastIndexOf(match));
-        matchManaged.setMatchStatus(MATCH_STATUS.PLAYED);
+    @Override
+    public BRACKET_STATUS getBracketStatus() {
+        return bracket_status;
+    }
+
+    @Override
+    public void markAsPlayed(Long matchId) {
+        Optional<Match> matchOptional = getCurrentRound().stream().filter(match -> match.getId() == matchId).findFirst();
+        if (matchOptional.isPresent()) {
+            Match match = matchOptional.get();
+            match.setMatchStatus(MATCH_STATUS.PLAYED);
+        } else throw new RuntimeException("Match not found in current round");
+        updateBracketStatusIfNeeded();
+    }
+
+    private void updateBracketStatusIfNeeded() {
+        if (currentRoundNumber == bracket.getNumberOfRounds()) {
+            if (getCurrentRound().stream().anyMatch(match -> match.getMatchStatus() == MATCH_STATUS.LIVE && match.getMatchStatus() == MATCH_STATUS.NOT_PLAYED)) {
+                bracket_status = BRACKET_STATUS.PLAYED;
+            }
+        }
     }
 
     private void startNewRound() {

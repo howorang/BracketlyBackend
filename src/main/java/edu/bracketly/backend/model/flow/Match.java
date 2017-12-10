@@ -10,6 +10,7 @@ import java.util.Set;
 @Getter
 @Setter
 public class Match {
+    private long id;
     private Set<Seat> seats;
     private Seat winnerSeat;
     private MATCH_STATUS matchStatus;
