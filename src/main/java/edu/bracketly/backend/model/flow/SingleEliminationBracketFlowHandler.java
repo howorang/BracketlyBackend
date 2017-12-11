@@ -15,7 +15,6 @@ public class SingleEliminationBracketFlowHandler implements FlowHandler {
 
     private SingleEliminationBracket bracket;
     private List<List<Match>> rounds = new ArrayList<>();
-    private BRACKET_STATUS bracket_status = BRACKET_STATUS.LIVE;
 
     public SingleEliminationBracketFlowHandler(SingleEliminationBracket bracket) {
         this.bracket = bracket;
@@ -68,7 +67,7 @@ public class SingleEliminationBracketFlowHandler implements FlowHandler {
             if (currentRound.stream().anyMatch(match -> match.getMatchStatus() == MATCH_STATUS.LIVE)) {
                 return null;
             } else {
-                if (bracket_status != BRACKET_STATUS.PLAYED) {
+                if (bracket.getBracketStatus() != BRACKET_STATUS.PLAYED) {
                     startNewRound();
                     return playNextMatch();
                 } else throw new BracketIsPlayedException();
@@ -78,7 +77,7 @@ public class SingleEliminationBracketFlowHandler implements FlowHandler {
 
     @Override
     public BRACKET_STATUS getBracketStatus() {
-        return bracket_status;
+        return bracket.getBracketStatus();
     }
 
     @Override
@@ -96,7 +95,7 @@ public class SingleEliminationBracketFlowHandler implements FlowHandler {
     private void updateBracketStatusIfNeeded() {
         if (bracket.getCurrentRoundNumber() == bracket.getNumberOfRounds()) {
             if (getCurrentRound().stream().noneMatch(match -> match.getMatchStatus() == MATCH_STATUS.LIVE && match.getMatchStatus() == MATCH_STATUS.NOT_PLAYED)) {
-                bracket_status = BRACKET_STATUS.PLAYED;
+                 bracket.setBracketStatus(BRACKET_STATUS.PLAYED);
             }
         }
     }

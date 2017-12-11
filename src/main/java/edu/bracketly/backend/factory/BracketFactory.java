@@ -2,6 +2,7 @@ package edu.bracketly.backend.factory;
 
 import edu.bracketly.backend.model.bracket.Seat;
 import edu.bracketly.backend.model.bracket.SingleEliminationBracket;
+import edu.bracketly.backend.model.flow.BRACKET_STATUS;
 import edu.bracketly.backend.model.flow.SingleEliminationBracketFlowHandler;
 import edu.bracketly.backend.tree.Node;
 import edu.bracketly.backend.tree.Traverser;
@@ -17,6 +18,7 @@ public class BracketFactory {
     public SingleEliminationBracket singleEliminationBracket(int numberOfPlayers) {
         SingleEliminationBracket bracket = new SingleEliminationBracket();
         bracket.setNumberOfPlayers(numberOfPlayers);
+        bracket.setBracketStatus(BRACKET_STATUS.LIVE);
         int perfectBracketSize = MathUtils.nextGreaterPowerOfTwo(numberOfPlayers);
         bracket.setNumberOfRounds((int) MathUtils.log2(perfectBracketSize));
         int byes = perfectBracketSize - numberOfPlayers;
