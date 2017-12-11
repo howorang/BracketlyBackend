@@ -1,5 +1,6 @@
 package edu.bracketly.backend.model;
 
+import edu.bracketly.backend.factory.BracketFactory;
 import edu.bracketly.backend.model.bracket.Player;
 import edu.bracketly.backend.model.bracket.Seat;
 import edu.bracketly.backend.model.bracket.SingleEliminationBracket;
@@ -19,13 +20,15 @@ public class SingleEliminationBracketTests {
 
     @Test
     public void newBracketStatus() {
-        SingleEliminationBracket bracket = new SingleEliminationBracket(2);
+        BracketFactory factory = new BracketFactory();
+        SingleEliminationBracket bracket = factory.singleEliminationBracket(2);
         assertTrue(bracket.getFlowHandler().getBracketStatus() == BRACKET_STATUS.LIVE);
     }
 
     @Test
     public void playSimpleTournament() {
-        SingleEliminationBracket bracket = new SingleEliminationBracket(4);
+        BracketFactory factory = new BracketFactory();
+        SingleEliminationBracket bracket = factory.singleEliminationBracket(4);
         RandomSeedingStrategy randomSeedingStrategy = new RandomSeedingStrategy();
         Set<Player> players = LongStream.range(1, 5).mapToObj(p -> new Player(p, "Name")).collect(Collectors.toSet());
         randomSeedingStrategy.seed(bracket, players);
@@ -49,7 +52,8 @@ public class SingleEliminationBracketTests {
 
     @Test(expected = BracketIsPlayedException.class)
     public void requestMatchOnPlayedBracket() {
-        SingleEliminationBracket bracket = new SingleEliminationBracket(4);
+        BracketFactory factory = new BracketFactory();
+        SingleEliminationBracket bracket = factory.singleEliminationBracket(4);
         RandomSeedingStrategy randomSeedingStrategy = new RandomSeedingStrategy();
         Set<Player> players = LongStream.range(1, 5).mapToObj(p -> new Player(p, "Name")).collect(Collectors.toSet());
         randomSeedingStrategy.seed(bracket, players);

@@ -11,6 +11,7 @@ import java.util.Set;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @ToString(of = {"number", "depth"})
 public class Seat implements Node {
     private Player player;
