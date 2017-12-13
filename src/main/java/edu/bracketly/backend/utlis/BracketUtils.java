@@ -1,8 +1,6 @@
 package edu.bracketly.backend.utlis;
 
-import edu.bracketly.backend.model.bracket.Bracket;
-import edu.bracketly.backend.model.bracket.Seat;
-import edu.bracketly.backend.model.bracket.SingleEliminationBracket;
+import edu.bracketly.backend.model.entity.bracket.Seat;
 import edu.bracketly.backend.tree.Traverser;
 
 import java.util.ArrayList;

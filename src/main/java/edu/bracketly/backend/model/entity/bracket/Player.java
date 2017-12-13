@@ -1,13 +1,17 @@
-package edu.bracketly.backend.model.bracket;
+package edu.bracketly.backend.model.entity.bracket;
 
+import edu.bracketly.backend.model.entity.BaseEntity;
 import lombok.Data;
+
+import javax.persistence.Entity;
 
 /**
  * Created by Piotr Borczyk on 06.11.2017.
  */
 
+@Entity
 @Data
-public class Player {
+public class Player extends BaseEntity{
     private Long id;
     private String name;
     private long rank;

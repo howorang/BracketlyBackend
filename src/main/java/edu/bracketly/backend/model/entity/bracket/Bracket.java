@@ -1,10 +1,14 @@
-package edu.bracketly.backend.model.bracket;
+package edu.bracketly.backend.model.entity.bracket;
 
+import edu.bracketly.backend.model.entity.BaseEntity;
 import edu.bracketly.backend.model.flow.BRACKET_STATUS;
 import edu.bracketly.backend.model.flow.FlowHandler;
 import lombok.Data;
 
-import java.util.HashSet;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.MappedSuperclass;
 import java.util.List;
 
 /**
@@ -12,7 +16,9 @@ import java.util.List;
  */
 
 @Data
-public abstract class Bracket {
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class Bracket extends BaseEntity {
     private int numberOfPlayers;
     private int numberOfRounds;
     private Seat bracketRoot;

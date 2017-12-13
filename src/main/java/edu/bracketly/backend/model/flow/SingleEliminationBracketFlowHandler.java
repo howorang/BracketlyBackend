@@ -1,7 +1,10 @@
 package edu.bracketly.backend.model.flow;
 
-import edu.bracketly.backend.model.bracket.Seat;
-import edu.bracketly.backend.model.bracket.SingleEliminationBracket;
+import edu.bracketly.backend.model.entity.bracket.Bracket;
+import edu.bracketly.backend.model.entity.bracket.Seat;
+import edu.bracketly.backend.model.entity.bracket.SingleEliminationBracket;
+import edu.bracketly.backend.model.entity.match.Match;
+import edu.bracketly.backend.model.entity.match.Round;
 import edu.bracketly.backend.tree.Traverser;
 
 import java.util.ArrayList;
@@ -14,14 +17,14 @@ import java.util.Set;
 public class SingleEliminationBracketFlowHandler implements FlowHandler {
 
     private SingleEliminationBracket bracket;
-    private List<List<Match>> rounds = new ArrayList<>();
+    private List<Round> rounds = new ArrayList<>();
 
     public SingleEliminationBracketFlowHandler(SingleEliminationBracket bracket) {
         this.bracket = bracket;
-        initRounds();
+        initRounds(bracket);
     }
 
-    private void initRounds() {
+    private void initRounds(SingleEliminationBracket bracket) {
         Map<Integer, List<Seat>> seatsByDepth = new HashMap<>();
         new Traverser(bracket.getBracketRoot(), node -> {
             Seat seat = (Seat) node;
@@ -30,11 +33,12 @@ public class SingleEliminationBracketFlowHandler implements FlowHandler {
         }).traverse();
 
         for (int i = 1; i <= bracket.getNumberOfRounds(); i++) {
-            rounds.add(initRound(seatsByDepth.get(bracket.getNumberOfRounds() - i)));
+            rounds.add(initRound(bracket, i, seatsByDepth.get(bracket.getNumberOfRounds() - i)));
         }
     }
 
-    private List<Match> initRound(List<Seat> seats) {
+    private Round initRound(Bracket bracket, int roundNumber, List<Seat> seats) {
+        Round round = new Round();
         List<Match> matches = new ArrayList<>();
         for (Seat winnerSeat : seats) {
             Match match = new Match();
@@ -43,7 +47,10 @@ public class SingleEliminationBracketFlowHandler implements FlowHandler {
             match.setId(getMatchId(winnerSeat, match.getSeats()));
             matches.add(match);
         }
-        return matches;
+        round.setMatches(matches);
+        round.setBracket(bracket);
+        round.setRoundNumber(roundNumber);
+        return round;
     }
 
     private long getMatchId(Seat winnerSeat, Set<Seat> seats) {
@@ -57,7 +64,7 @@ public class SingleEliminationBracketFlowHandler implements FlowHandler {
     
     @Override
     public Match playNextMatch() throws BracketIsPlayedException {
-        List<Match> currentRound = rounds.get(bracket.getCurrentRoundNumber() - 1);
+        List<Match> currentRound = rounds.get(bracket.getCurrentRoundNumber() - 1).getMatches();
         Optional<Match> matchOptional = currentRound.stream().filter(match -> match.getMatchStatus() == MATCH_STATUS.NOT_PLAYED).findFirst();
         if (matchOptional.isPresent()) {
             Match match = matchOptional.get();
@@ -105,6 +112,6 @@ public class SingleEliminationBracketFlowHandler implements FlowHandler {
     }
 
     private List<Match> getCurrentRound() {
-        return rounds.get(bracket.getCurrentRoundNumber() - 1);
+        return rounds.get(bracket.getCurrentRoundNumber() - 1).getMatches();
     }
 }

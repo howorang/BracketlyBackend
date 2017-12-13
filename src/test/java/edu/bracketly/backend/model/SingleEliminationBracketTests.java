@@ -1,12 +1,12 @@
 package edu.bracketly.backend.model;
 
 import edu.bracketly.backend.factory.BracketFactory;
-import edu.bracketly.backend.model.bracket.Player;
-import edu.bracketly.backend.model.bracket.Seat;
-import edu.bracketly.backend.model.bracket.SingleEliminationBracket;
+import edu.bracketly.backend.model.entity.bracket.Player;
+import edu.bracketly.backend.model.entity.bracket.Seat;
+import edu.bracketly.backend.model.entity.bracket.SingleEliminationBracket;
 import edu.bracketly.backend.model.flow.BRACKET_STATUS;
 import edu.bracketly.backend.model.flow.BracketIsPlayedException;
-import edu.bracketly.backend.model.flow.Match;
+import edu.bracketly.backend.model.entity.match.Match;
 import edu.bracketly.backend.model.seeder.RandomSeedingStrategy;
 import org.junit.Test;
 

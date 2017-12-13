@@ -1,7 +1,7 @@
 package edu.bracketly.backend.factory;
 
-import edu.bracketly.backend.model.bracket.Seat;
-import edu.bracketly.backend.model.bracket.SingleEliminationBracket;
+import edu.bracketly.backend.model.entity.bracket.Seat;
+import edu.bracketly.backend.model.entity.bracket.SingleEliminationBracket;
 import edu.bracketly.backend.model.flow.BRACKET_STATUS;
 import edu.bracketly.backend.model.flow.SingleEliminationBracketFlowHandler;
 import edu.bracketly.backend.tree.Node;
