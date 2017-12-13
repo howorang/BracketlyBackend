@@ -7,12 +7,14 @@ import edu.bracketly.backend.model.flow.SingleEliminationBracketFlowHandler;
 import edu.bracketly.backend.tree.Node;
 import edu.bracketly.backend.tree.Traverser;
 import edu.bracketly.backend.utlis.MathUtils;
+import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.List;
 
 import static edu.bracketly.backend.utlis.BracketUtils.getLeaves;
 
+@Component
 public class BracketFactory {
 
     public SingleEliminationBracket singleEliminationBracket(int numberOfPlayers) {
