@@ -15,14 +15,16 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-@Entity
-@EqualsAndHashCode(callSuper = true)
 @Data
+@EqualsAndHashCode(callSuper = true)
+@Entity
 public class Match extends BaseEntity {
     private Long tag;
 
     @OneToMany
     private List<Seat> seats;
+
     private Seat winnerSeat;
+
     private MATCH_STATUS matchStatus = MATCH_STATUS.NOT_PLAYED;
 }

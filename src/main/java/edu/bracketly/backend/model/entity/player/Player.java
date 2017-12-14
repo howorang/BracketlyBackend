@@ -10,12 +10,14 @@ import javax.persistence.Entity;
  * Created by Piotr Borczyk on 06.11.2017.
  */
 
-@Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Entity
 public class Player extends BaseEntity{
     private Long id;
+
     private String name;
+
     private long rank;
 
     public Player(Long id, String name) {

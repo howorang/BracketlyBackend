@@ -29,6 +29,7 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Bracket extends BaseEntity {
     private int numberOfPlayers;
+
     private int numberOfRounds;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -37,12 +38,12 @@ public abstract class Bracket extends BaseEntity {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Round> rounds = new ArrayList<>();
 
-    private transient FlowHandler flowHandler;
     private int currentRoundNumber = 1;
 
     @Enumerated
     private BRACKET_STATUS bracketStatus = BRACKET_STATUS.LIVE;
 
+    private transient FlowHandler flowHandler;
 
     public abstract List<Seat> getStartingSeatsInPlayingOrder();
 }

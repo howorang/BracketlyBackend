@@ -12,11 +12,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.util.List;
 
-@Entity
-@EqualsAndHashCode(callSuper = true)
 @Data
+@EqualsAndHashCode(callSuper = true)
+@Entity
 public class Round extends BaseEntity {
-
     private int roundNumber;
 
     @ManyToOne(cascade = CascadeType.ALL)

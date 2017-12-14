@@ -14,18 +14,21 @@ import java.util.List;
 /**
  * Created by Piotr Borczyk on 06.11.2017.
  */
-
-@Entity
-@EqualsAndHashCode(callSuper = true, exclude = {"children"})
 @Data
+@EqualsAndHashCode(callSuper = true, exclude = {"children"})
+@Entity
 public class Seat extends BaseEntity implements Node {
     private Player player;
+
     @OneToMany(cascade = CascadeType.ALL)
     private List<Seat> children;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Seat parent;
+
     private boolean isLeaf;
+
     private int depth;
+
     private int number;
 }
