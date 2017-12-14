@@ -1,7 +1,7 @@
 package edu.bracketly.backend.model;
 
 import edu.bracketly.backend.factory.BracketFactory;
-import edu.bracketly.backend.model.entity.bracket.Player;
+import edu.bracketly.backend.model.entity.player.Player;
 import edu.bracketly.backend.model.entity.bracket.Seat;
 import edu.bracketly.backend.model.entity.bracket.SingleEliminationBracket;
 import edu.bracketly.backend.model.flow.BRACKET_STATUS;

@@ -1,7 +1,7 @@
 package edu.bracketly.backend.model.seeder;
 
 import edu.bracketly.backend.model.entity.bracket.Bracket;
-import edu.bracketly.backend.model.entity.bracket.Player;
+import edu.bracketly.backend.model.entity.player.Player;
 import edu.bracketly.backend.model.entity.bracket.Seat;
 
 import java.util.*;

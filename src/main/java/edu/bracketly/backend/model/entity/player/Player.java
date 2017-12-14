@@ -1,4 +1,4 @@
-package edu.bracketly.backend.model.entity.bracket;
+package edu.bracketly.backend.model.entity.player;
 
 import edu.bracketly.backend.model.entity.BaseEntity;
 import lombok.Data;
