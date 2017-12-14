@@ -2,6 +2,7 @@ package edu.bracketly.backend.model.entity.bracket;
 
 import edu.bracketly.backend.model.entity.BaseEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.Entity;
 
@@ -11,6 +12,7 @@ import javax.persistence.Entity;
 
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class Player extends BaseEntity{
     private Long id;
     private String name;

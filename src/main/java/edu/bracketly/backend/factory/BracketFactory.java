@@ -9,7 +9,7 @@ import edu.bracketly.backend.tree.Traverser;
 import edu.bracketly.backend.utlis.MathUtils;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import static edu.bracketly.backend.utlis.BracketUtils.getLeaves;
@@ -26,7 +26,7 @@ public class BracketFactory {
         int byes = perfectBracketSize - numberOfPlayers;
         Seat bracketRoot = generatePerfectBracket(perfectBracketSize);
         bracket.setBracketRoot(bracketRoot);
-        setMatchNumbers(bracketRoot);
+        setSeatNumbers(bracketRoot);
         if (byes != 0) {
             cutOutByes(bracketRoot, byes);
         }
@@ -35,7 +35,7 @@ public class BracketFactory {
         return bracket;
     }
 
-    private void setMatchNumbers(Seat bracketRoot) {
+    private void setSeatNumbers(Seat bracketRoot) {
         new Traverser(bracketRoot, new Traverser.OnEnter() {
             int number = 0;
 
@@ -70,7 +70,7 @@ public class BracketFactory {
     private Seat generatePerfectBracket(int bracketSize, int depth, Seat parent) {
         Seat root = new Seat();
         root.setDepth(depth);
-        root.setChildren(new HashSet<>());
+        root.setChildren(new ArrayList<>());
         root.setParent(parent);
         if (bracketSize != 1) {
             int newDepth = ++depth;

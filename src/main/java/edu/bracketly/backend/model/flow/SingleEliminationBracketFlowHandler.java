@@ -12,12 +12,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 
 public class SingleEliminationBracketFlowHandler implements FlowHandler {
 
     private SingleEliminationBracket bracket;
-    private List<Round> rounds = new ArrayList<>();
 
     public SingleEliminationBracketFlowHandler(SingleEliminationBracket bracket) {
         this.bracket = bracket;
@@ -33,7 +31,7 @@ public class SingleEliminationBracketFlowHandler implements FlowHandler {
         }).traverse();
 
         for (int i = 1; i <= bracket.getNumberOfRounds(); i++) {
-            rounds.add(initRound(bracket, i, seatsByDepth.get(bracket.getNumberOfRounds() - i)));
+            bracket.getRounds().add(initRound(bracket, i, seatsByDepth.get(bracket.getNumberOfRounds() - i)));
         }
     }
 
@@ -44,7 +42,7 @@ public class SingleEliminationBracketFlowHandler implements FlowHandler {
             Match match = new Match();
             match.setSeats(winnerSeat.getChildren());
             match.setWinnerSeat(winnerSeat);
-            match.setId(getMatchId(winnerSeat, match.getSeats()));
+            match.setTag(getMatchTag(winnerSeat, match.getSeats()));
             matches.add(match);
         }
         round.setMatches(matches);
@@ -53,7 +51,7 @@ public class SingleEliminationBracketFlowHandler implements FlowHandler {
         return round;
     }
 
-    private long getMatchId(Seat winnerSeat, Set<Seat> seats) {
+    private long getMatchTag(Seat winnerSeat, List<Seat> seats) {
         StringBuilder id = new StringBuilder();
         for (Seat seat : seats) {
             id.append(seat.getNumber());
@@ -64,7 +62,7 @@ public class SingleEliminationBracketFlowHandler implements FlowHandler {
     
     @Override
     public Match playNextMatch() throws BracketIsPlayedException {
-        List<Match> currentRound = rounds.get(bracket.getCurrentRoundNumber() - 1).getMatches();
+        List<Match> currentRound = bracket.getRounds().get(bracket.getCurrentRoundNumber() - 1).getMatches();
         Optional<Match> matchOptional = currentRound.stream().filter(match -> match.getMatchStatus() == MATCH_STATUS.NOT_PLAYED).findFirst();
         if (matchOptional.isPresent()) {
             Match match = matchOptional.get();
@@ -112,6 +110,6 @@ public class SingleEliminationBracketFlowHandler implements FlowHandler {
     }
 
     private List<Match> getCurrentRound() {
-        return rounds.get(bracket.getCurrentRoundNumber() - 1).getMatches();
+        return bracket.getRounds().get(bracket.getCurrentRoundNumber() - 1).getMatches();
     }
 }
