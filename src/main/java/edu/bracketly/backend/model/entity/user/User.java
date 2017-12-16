@@ -5,7 +5,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Data
@@ -19,7 +21,8 @@ public class User extends BaseEntity {
 
     private String password;
 
-    private long rank;
+    @OneToOne(cascade = CascadeType.ALL)
+    private UserDetails details;
 
     public User(String username, String password) {
         this.username = username;
