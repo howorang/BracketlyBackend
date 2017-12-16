@@ -5,15 +5,12 @@ import edu.bracketly.backend.model.entity.bracket.Seat;
 import edu.bracketly.backend.model.flow.MATCH_STATUS;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
 import java.util.List;
-import java.util.Objects;
-import java.util.Set;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -26,5 +23,6 @@ public class Match extends BaseEntity {
 
     private Seat winnerSeat;
 
+    @Enumerated(EnumType.STRING)
     private MATCH_STATUS matchStatus = MATCH_STATUS.NOT_PLAYED;
 }

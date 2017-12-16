@@ -7,15 +7,7 @@ import edu.bracketly.backend.model.flow.FlowHandler;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.CascadeType;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.Enumerated;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +32,7 @@ public abstract class Bracket extends BaseEntity {
 
     private int currentRoundNumber = 1;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private BRACKET_STATUS bracketStatus = BRACKET_STATUS.LIVE;
 
     private transient FlowHandler flowHandler;

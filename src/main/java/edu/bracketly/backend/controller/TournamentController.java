@@ -1,14 +1,38 @@
 package edu.bracketly.backend.controller;
 
 import edu.bracketly.backend.dto.CreateTournamentDto;
-import edu.bracketly.backend.dto.CreateTournamentResponseDto;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import edu.bracketly.backend.dto.TournamentSimpleDto;
+import edu.bracketly.backend.service.TournamentService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/tournament")
 public class TournamentController {
-    public CreateTournamentResponseDto createTournament(CreateTournamentDto createTournamentDto) {
-        return null;
+
+    @PostMapping
+    public void createTournament(CreateTournamentDto createTournamentDto) {
+        tournamentService.createTournament(createTournamentDto);
     }
+
+    @Autowired
+    private TournamentService tournamentService;
+
+    @PutMapping("/join/{tournamentId}")
+    public void joinTournament(@PathVariable Long tournamentId) {
+        tournamentService.joinTournament(tournamentId);
+    }
+
+    @GetMapping("/all")
+    public List<TournamentSimpleDto> getAllTournaments() {
+        return tournamentService.getAllTournaments();
+    }
+
+    @PostMapping("/start/{tournamentId}")
+    public void startTournament(@PathVariable Long tournamentId) {
+        tournamentService.startTournament(tournamentId);
+    }
+
 }

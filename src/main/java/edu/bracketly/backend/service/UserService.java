@@ -4,6 +4,7 @@ import edu.bracketly.backend.exception.UserAlreadyExistsException;
 import edu.bracketly.backend.model.entity.user.User;
 import edu.bracketly.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,7 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public void createUser(String username, String password) throws UserAlreadyExistsException {
+    public void createUser(String username, String password) {
 
         if (userExists(username)) {
             throw new UserAlreadyExistsException("User with name " + username + "already exists.");
@@ -26,6 +27,11 @@ public class UserService {
         newUser.setUsername(username);
         newUser.setPassword(passwordEncoder.encode(password));
         userRepository.save(newUser);
+    }
+
+    public User getCurrentUser() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return userRepository.findByUsername(username);
     }
 
     private boolean userExists(String username) {
