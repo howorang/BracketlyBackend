@@ -3,8 +3,11 @@ package edu.bracketly.backend.service;
 import edu.bracketly.backend.dto.CreateTournamentDto;
 import edu.bracketly.backend.dto.EditTournamentDto;
 import edu.bracketly.backend.dto.TournamentSimpleDto;
+import edu.bracketly.backend.dto.TournamentStartResponseDto;
+import edu.bracketly.backend.exception.NoPlayersException;
 import edu.bracketly.backend.exception.TournamentDoesNotExistException;
 import edu.bracketly.backend.exception.TournamentHasAlreadyBeenStartedException;
+import edu.bracketly.backend.exception.WrongUserException;
 import edu.bracketly.backend.model.entity.Tournament;
 import edu.bracketly.backend.model.entity.user.User;
 import edu.bracketly.backend.model.flow.TOURNAMENT_STATUS;
@@ -54,7 +57,7 @@ public class TournamentService {
         tournamentRepository.save(tournament);
     }
 
-    public void startTournament(Long tournamentId) {
+    public TournamentStartResponseDto startTournament(Long tournamentId) {
         Tournament tournament = tournamentRepository.findOne(tournamentId);
         if (tournament == null) {
             throw new TournamentDoesNotExistException("Tournament with id: " + tournamentId + " doesn't exist.");
@@ -62,10 +65,21 @@ public class TournamentService {
         if (tournament.getStatus() != TOURNAMENT_STATUS.PLANNING) {
             throw new TournamentHasAlreadyBeenStartedException("Tournament with id: " + tournamentId + " has already been played or started.");
         }
+        if (!tournament.getOrganizer().equals(userService.getCurrentUser())) {
+            throw new WrongUserException("Attempted to start tournament while not being it's orginizer.");
+        }
+        if (tournament.getPlayers().isEmpty()) {
+            throw new NoPlayersException("No players have joined tournament with id: " + tournamentId + " cannot start");
+        }
         tournament.setStatus(TOURNAMENT_STATUS.LIVE);
         tournament.setBracket(bracketService.initBracket(tournament));
         bracketService.seedBracket(tournament);
         tournamentRepository.save(tournament);
+
+        TournamentStartResponseDto dto = new TournamentStartResponseDto();
+        dto.setBracketId(tournament.getBracket().getId());
+
+        return dto;
     }
 
     public List<TournamentSimpleDto> getAllTournaments() {
