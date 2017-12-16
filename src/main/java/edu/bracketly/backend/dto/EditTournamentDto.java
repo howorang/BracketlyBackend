@@ -8,8 +8,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
 @Data
-public class CreateTournamentDto {
-    private String name;
+public class EditTournamentDto {
+
+    String name;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date eventDate;

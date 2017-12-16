@@ -1,6 +1,7 @@
 package edu.bracketly.backend.service;
 
 import edu.bracketly.backend.dto.CreateTournamentDto;
+import edu.bracketly.backend.dto.EditTournamentDto;
 import edu.bracketly.backend.dto.TournamentSimpleDto;
 import edu.bracketly.backend.exception.TournamentDoesNotExistException;
 import edu.bracketly.backend.exception.TournamentHasAlreadyBeenStartedException;
@@ -8,6 +9,7 @@ import edu.bracketly.backend.model.entity.Tournament;
 import edu.bracketly.backend.model.entity.user.User;
 import edu.bracketly.backend.model.flow.TOURNAMENT_STATUS;
 import edu.bracketly.backend.repository.TournamentRepository;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -71,5 +73,17 @@ public class TournamentService {
         return tournaments.stream()
                 .map(tournament -> new TournamentSimpleDto(tournament.getId(), tournament.getName(), tournament.getCreationDate(), tournament.getEventDate()))
                 .collect(Collectors.toList());
+    }
+
+    public void modifyTournament(Long tournamentId, EditTournamentDto dto) {
+        Tournament tournament = tournamentRepository.findOne(tournamentId);
+        if (tournament == null) {
+            throw new TournamentDoesNotExistException("Tournament with id: " + tournamentId + " doesn't exist.");
+        }
+        if (StringUtils.isNotBlank(dto.getName())) tournament.setName(dto.getName());
+        if (dto.getBracketType() != null) tournament.setBracketType(dto.getBracketType());
+        if (dto.getSeedingStrategy() != null) tournament.setSeeding_strategy(dto.getSeedingStrategy());
+        if (dto.getEventDate() != null) tournament.setEventDate(dto.getEventDate());
+        tournamentRepository.save(tournament);
     }
 }
