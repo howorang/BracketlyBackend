@@ -1,7 +1,7 @@
 package edu.bracketly.backend.model.entity;
 
 import edu.bracketly.backend.model.entity.bracket.Bracket;
-import edu.bracketly.backend.model.entity.player.Player;
+import edu.bracketly.backend.model.entity.user.User;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -19,10 +19,10 @@ public class Tournament extends BaseEntity {
     String name;
 
     @ManyToMany
-    private Set<Player> players;
+    private Set<User> players;
 
     @ManyToOne
-    private Player organizer;
+    private User organizer;
 
     @OneToOne
     private Bracket bracket;

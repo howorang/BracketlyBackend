@@ -1,7 +1,7 @@
 package edu.bracketly.backend.model;
 
 import edu.bracketly.backend.factory.BracketFactory;
-import edu.bracketly.backend.model.entity.player.Player;
+import edu.bracketly.backend.model.entity.user.User;
 import edu.bracketly.backend.model.entity.bracket.Seat;
 import edu.bracketly.backend.model.entity.bracket.SingleEliminationBracket;
 import edu.bracketly.backend.model.flow.BRACKET_STATUS;
@@ -30,7 +30,7 @@ public class SingleEliminationBracketTests {
         BracketFactory factory = new BracketFactory();
         SingleEliminationBracket bracket = factory.singleEliminationBracket(4);
         RandomSeedingStrategy randomSeedingStrategy = new RandomSeedingStrategy();
-        Set<Player> players = LongStream.range(1, 5).mapToObj(p -> new Player(p, "Name")).collect(Collectors.toSet());
+        Set<User> players = LongStream.range(1, 5).mapToObj(p -> new User("Name", "Pass")).collect(Collectors.toSet());
         randomSeedingStrategy.seed(bracket, players);
 
         Match match = bracket.getFlowHandler().playNextMatch();
@@ -55,7 +55,7 @@ public class SingleEliminationBracketTests {
         BracketFactory factory = new BracketFactory();
         SingleEliminationBracket bracket = factory.singleEliminationBracket(4);
         RandomSeedingStrategy randomSeedingStrategy = new RandomSeedingStrategy();
-        Set<Player> players = LongStream.range(1, 5).mapToObj(p -> new Player(p, "Name")).collect(Collectors.toSet());
+        Set<User> players = LongStream.range(1, 5).mapToObj(p -> new User("Name", "Pass")).collect(Collectors.toSet());
         randomSeedingStrategy.seed(bracket, players);
 
         Match match = bracket.getFlowHandler().playNextMatch();

@@ -1,10 +1,10 @@
 package edu.bracketly.backend.model.seeder;
 
 import edu.bracketly.backend.model.entity.bracket.Bracket;
-import edu.bracketly.backend.model.entity.player.Player;
+import edu.bracketly.backend.model.entity.user.User;
 
 import java.util.Set;
 
 public interface SeedingStrategy {
-    void seed(Bracket bracket, Set<Player> players);
+    void seed(Bracket bracket, Set<User> players);
 }
