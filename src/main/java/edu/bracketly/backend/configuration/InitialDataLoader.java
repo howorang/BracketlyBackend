@@ -29,6 +29,13 @@ public class InitialDataLoader implements ApplicationListener<ApplicationReadyEv
         UserDetails userDetails = new UserDetails();
         test.setDetails(userDetails);
         userRepository.save(test);
+
+        User howo = new User();
+        howo.setUsername("howo");
+        howo.setPassword(passwordEncoder.encode("test"));
+        UserDetails userDetails2 = new UserDetails();
+        howo.setDetails(userDetails2);
+        userRepository.save(howo);
     }
 
     @Bean
