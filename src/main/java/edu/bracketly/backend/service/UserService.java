@@ -2,6 +2,7 @@ package edu.bracketly.backend.service;
 
 import edu.bracketly.backend.exception.UserAlreadyExistsException;
 import edu.bracketly.backend.model.entity.user.User;
+import edu.bracketly.backend.model.entity.user.UserDetails;
 import edu.bracketly.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,6 +27,8 @@ public class UserService {
         User newUser = new User();
         newUser.setUsername(username);
         newUser.setPassword(passwordEncoder.encode(password));
+        UserDetails details = new UserDetails();
+        newUser.setDetails(details);
         userRepository.save(newUser);
     }
 

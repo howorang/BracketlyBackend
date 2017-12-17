@@ -7,7 +7,11 @@ import edu.bracketly.backend.model.entity.match.Match;
 import edu.bracketly.backend.model.entity.match.Round;
 import edu.bracketly.backend.tree.Traverser;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public class SingleEliminationBracketFlowHandler implements FlowHandler {
 
@@ -90,11 +94,11 @@ public class SingleEliminationBracketFlowHandler implements FlowHandler {
     }
 
     @Override
-    public void markAsPlayed(Long matchId, int winnigSeatNumber) {
-        Optional<Match> matchOptional = getCurrentRound().stream().filter(match -> match.getId() == matchId).findFirst();
+    public void markAsPlayed(Long matchId, Long winnigSeatNumber) {
+        Optional<Match> matchOptional = getCurrentRound().stream().filter(match -> match.getId().equals(matchId)).findFirst();
         if (matchOptional.isPresent()) {
             Match match = matchOptional.get();
-            Optional<Seat> winningSeat = match.getSeats().stream().filter(seat -> seat.getNumber() == winnigSeatNumber).findFirst();
+            Optional<Seat> winningSeat = match.getSeats().stream().filter(seat -> seat.getId().equals(winnigSeatNumber)).findFirst();
             match.getWinnerSeat().setPlayer(winningSeat.get().getPlayer());
             match.setMatchStatus(MATCH_STATUS.PLAYED);
         } else throw new RuntimeException("Match not found in current round");

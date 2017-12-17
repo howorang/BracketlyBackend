@@ -7,7 +7,7 @@ import java.util.List;
 public interface FlowHandler {
     Match playNextMatch() throws BracketIsPlayedException;
 
-    void markAsPlayed(Long matchId, int winningSeatNumber);
+    void markAsPlayed(Long matchId, Long winningSeatNumber);
 
     BRACKET_STATUS getBracketStatus();
 
