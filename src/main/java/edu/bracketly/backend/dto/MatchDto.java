@@ -12,7 +12,6 @@ public class MatchDto {
     private Long id;
     private String tag;
     private List<SeatDto> players;
-    private int round;
     private MATCH_STATUS matchStatus;
 
     public static MatchDto asDto(Match match) {
@@ -21,7 +20,6 @@ public class MatchDto {
         dto.setTag(match.getTag().toString());
         dto.setMatchStatus(match.getMatchStatus());
         dto.setPlayers(match.getSeats().stream().map(SeatDto::asDto).collect(Collectors.toList()));
-        //TO DO round
         return dto;
     }
 }

@@ -1,5 +1,6 @@
 package edu.bracketly.backend.service;
 
+import edu.bracketly.backend.dto.BracketStateDto;
 import edu.bracketly.backend.factory.BracketFactory;
 import edu.bracketly.backend.model.entity.Tournament;
 import edu.bracketly.backend.model.entity.bracket.Bracket;
@@ -62,5 +63,11 @@ public class BracketService {
             case RANDOM:
                 new RandomSeedingStrategy().seed(tournament.getBracket(), tournament.getPlayers());
         }
+    }
+
+    public BracketStateDto getBracketState(Long bracketId) {
+        Bracket bracket = bracketRepository.findOne(bracketId);
+        return bracket.getStateDto();
+
     }
 }

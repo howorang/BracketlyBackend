@@ -1,5 +1,6 @@
 package edu.bracketly.backend.model.entity.bracket;
 
+import edu.bracketly.backend.dto.BracketStateDto;
 import edu.bracketly.backend.model.entity.BaseEntity;
 import edu.bracketly.backend.model.flow.BRACKET_STATUS;
 import edu.bracketly.backend.model.flow.FlowHandler;
@@ -22,12 +23,14 @@ import java.util.List;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Bracket extends BaseEntity {
-    private int numberOfPlayers;
+    protected int numberOfPlayers;
 
     @Enumerated(EnumType.STRING)
-    private BRACKET_STATUS bracketStatus = BRACKET_STATUS.LIVE;
+    protected BRACKET_STATUS bracketStatus = BRACKET_STATUS.LIVE;
 
     public abstract List<Seat> getStartingSeatsInPlayingOrder();
 
     public abstract FlowHandler flowHandler();
+
+    public abstract BracketStateDto getStateDto();
 }

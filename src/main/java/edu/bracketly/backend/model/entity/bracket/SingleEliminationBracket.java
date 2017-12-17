@@ -1,6 +1,9 @@
 package edu.bracketly.backend.model.entity.bracket;
 
 
+import edu.bracketly.backend.dto.BracketStateDto;
+import edu.bracketly.backend.dto.PlayerDto;
+import edu.bracketly.backend.dto.SingleBracketStateDto;
 import edu.bracketly.backend.model.entity.match.Round;
 import edu.bracketly.backend.model.flow.FlowHandler;
 import edu.bracketly.backend.model.flow.SingleEliminationBracketFlowHandler;
@@ -43,5 +46,16 @@ public class SingleEliminationBracket extends Bracket {
             flowHandler = new SingleEliminationBracketFlowHandler(this);
         }
         return flowHandler;
+    }
+
+    @Override
+    public BracketStateDto getStateDto() {
+        SingleBracketStateDto dto = new SingleBracketStateDto();
+        dto.setBracket_status(bracketStatus);
+        dto.setCurrentRound(currentRoundNumber);
+        if (bracketRoot.getPlayer() != null) {
+            dto.setWinner(PlayerDto.asDto(bracketRoot.getPlayer()));
+        }
+        return dto;
     }
 }

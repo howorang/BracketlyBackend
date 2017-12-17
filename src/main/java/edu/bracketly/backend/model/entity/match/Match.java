@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import java.util.List;
 
 @Data
@@ -21,6 +22,7 @@ public class Match extends BaseEntity {
     @OneToMany
     private List<Seat> seats;
 
+    @OneToOne
     private Seat winnerSeat;
 
     @Enumerated(EnumType.STRING)
