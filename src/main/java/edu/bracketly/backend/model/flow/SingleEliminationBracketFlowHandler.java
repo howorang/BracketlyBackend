@@ -7,11 +7,7 @@ import edu.bracketly.backend.model.entity.match.Match;
 import edu.bracketly.backend.model.entity.match.Round;
 import edu.bracketly.backend.tree.Traverser;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class SingleEliminationBracketFlowHandler implements FlowHandler {
 
@@ -19,6 +15,9 @@ public class SingleEliminationBracketFlowHandler implements FlowHandler {
 
     public SingleEliminationBracketFlowHandler(SingleEliminationBracket bracket) {
         this.bracket = bracket;
+    }
+
+    public void init() {
         initRounds(bracket);
     }
 
@@ -59,7 +58,12 @@ public class SingleEliminationBracketFlowHandler implements FlowHandler {
         id.append(winnerSeat.getNumber());
         return Long.parseLong(id.toString());
     }
-    
+
+    @Override
+    public List<Match> getAvailiableMatches() {
+        return getCurrentRound();
+    }
+
     @Override
     public Match playNextMatch() throws BracketIsPlayedException {
         List<Match> currentRound = bracket.getRounds().get(bracket.getCurrentRoundNumber() - 1).getMatches();

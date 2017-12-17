@@ -35,7 +35,7 @@ public abstract class Bracket extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private BRACKET_STATUS bracketStatus = BRACKET_STATUS.LIVE;
 
-    private transient FlowHandler flowHandler;
-
     public abstract List<Seat> getStartingSeatsInPlayingOrder();
+
+    public abstract FlowHandler flowHandler();
 }

@@ -31,6 +31,7 @@ public class BracketFactory {
             cutOutByes(bracketRoot, byes);
         }
         SingleEliminationBracketFlowHandler flowHandler = new SingleEliminationBracketFlowHandler(bracket);
+        flowHandler.init();
         bracket.setFlowHandler(flowHandler);
         return bracket;
     }
