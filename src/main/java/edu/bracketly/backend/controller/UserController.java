@@ -21,7 +21,7 @@ public class UserController {
         userService.createUser(createUserDto.getUsername(), createUserDto.getPassword());
     }
 
-    @GetMapping("/user/me")
+    @GetMapping("/me")
     public UserDetailsDto aboutMe() {
         return userService.getLoggedInUserDetails();
     }
