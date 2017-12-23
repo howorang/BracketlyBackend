@@ -1,5 +1,6 @@
 package edu.bracketly.backend.service;
 
+import edu.bracketly.backend.dto.UserDetailsDto;
 import edu.bracketly.backend.exception.UserAlreadyExistsException;
 import edu.bracketly.backend.model.entity.user.User;
 import edu.bracketly.backend.model.entity.user.UserDetails;
@@ -39,5 +40,13 @@ public class UserService {
 
     private boolean userExists(String username) {
         return userRepository.existsByUsername(username);
+    }
+
+    public UserDetailsDto getLoggedInUserDetails() {
+        User currentUser = getCurrentUser();
+        UserDetailsDto dto = new UserDetailsDto();
+        dto.setRank(currentUser.getDetails().getRank());
+        dto.setUser(currentUser.getUsername());
+        return dto;
     }
 }
