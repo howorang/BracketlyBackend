@@ -6,6 +6,7 @@ import edu.bracketly.backend.dto.TournamentSimpleDto;
 import edu.bracketly.backend.dto.TournamentStartResponseDto;
 import edu.bracketly.backend.service.TournamentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,8 +29,11 @@ public class TournamentController {
     }
 
     @GetMapping("/all")
-    public List<TournamentSimpleDto> getAllTournaments() {
-        return tournamentService.getAllTournaments();
+    public List<TournamentSimpleDto> getAllTournaments(@RequestParam(defaultValue = "1", required = false) Integer page,
+                                                       @RequestParam(defaultValue = "name", required = false) String field,
+                                                       @RequestParam(defaultValue = "10", required = false) Integer size,
+                                                       @RequestParam(defaultValue = "ASC", required = false) Sort.Direction direction) {
+        return tournamentService.getAllTournaments(page, size, field, direction);
     }
 
     @PostMapping("/start/{tournamentId}")

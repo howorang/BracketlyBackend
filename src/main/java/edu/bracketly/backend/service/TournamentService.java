@@ -14,6 +14,10 @@ import edu.bracketly.backend.model.flow.TOURNAMENT_STATUS;
 import edu.bracketly.backend.repository.TournamentRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -82,9 +86,11 @@ public class TournamentService {
         return dto;
     }
 
-    public List<TournamentSimpleDto> getAllTournaments() {
-        List<Tournament> tournaments = tournamentRepository.findAll();
-        return tournaments.stream()
+    public List<TournamentSimpleDto> getAllTournaments(Integer page, Integer size, String field, Sort.Direction direction) {
+        Sort sort = new Sort(direction, field);
+        Pageable pageable = new PageRequest(page, size, direction, field);
+        Page<Tournament> tournaments = tournamentRepository.findAll(pageable);
+        return tournaments.getContent().stream()
                 .map(tournament -> new TournamentSimpleDto(tournament.getId(), tournament.getName(), tournament.getCreationDate(), tournament.getEventDate()))
                 .collect(Collectors.toList());
     }
