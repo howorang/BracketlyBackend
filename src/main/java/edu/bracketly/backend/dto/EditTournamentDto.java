@@ -12,7 +12,7 @@ public class EditTournamentDto {
 
     String name;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd/HH:mm:ss")
     private Date eventDate;
 
     private BRACKET_TYPE bracketType;
