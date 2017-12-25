@@ -29,7 +29,7 @@ public class TournamentController {
     }
 
     @GetMapping("/all")
-    public List<TournamentSimpleDto> getAllTournaments(@RequestParam(defaultValue = "1", required = false) Integer page,
+    public List<TournamentSimpleDto> getAllTournaments(@RequestParam(defaultValue = "0", required = false) Integer page,
                                                        @RequestParam(defaultValue = "name", required = false) String field,
                                                        @RequestParam(defaultValue = "10", required = false) Integer size,
                                                        @RequestParam(defaultValue = "ASC", required = false) Sort.Direction direction) {
