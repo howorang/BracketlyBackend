@@ -35,6 +35,8 @@ public class TournamentDto {
         if (tournament.getSeeding_strategy() != null) dto.setSeedingStrategy(tournament.getSeeding_strategy());
         dto.setTournamentStatus(tournament.getStatus());
         if (tournament.getBracket() != null) dto.setBracketId(tournament.getBracket().getId());
+        dto.setCreationDate(tournament.getCreationDate());
+        if (tournament.getEventDate() != null) dto.setEventDate(tournament.getEventDate());
         return dto;
     }
 }
