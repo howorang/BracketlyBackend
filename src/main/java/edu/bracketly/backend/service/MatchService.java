@@ -36,7 +36,7 @@ public class MatchService {
     public MatchDto getNextMatchForBracket(Long bracketId) {
         Bracket bracket = bracketRepository.getOne(bracketId);
         FlowHandler flowHandler = bracket.flowHandler();
-        Match match = flowHandler.playNextMatch();
+        Match match = flowHandler.getNextMatch();
         bracketRepository.save(bracket);
         return MatchDto.asDto(match);
     }

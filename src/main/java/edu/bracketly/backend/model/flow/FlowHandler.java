@@ -5,7 +5,7 @@ import edu.bracketly.backend.model.entity.match.Match;
 import java.util.List;
 
 public interface FlowHandler {
-    Match playNextMatch() throws BracketIsPlayedException;
+    Match getNextMatch() throws BracketIsPlayedException;
 
     void markAsPlayed(Long matchId, Long winningSeatNumber);
 

@@ -34,17 +34,17 @@ public class SingleEliminationBracketTests {
         Set<User> players = LongStream.range(1, 5).mapToObj(p -> new User("Name", "Pass")).collect(Collectors.toSet());
         randomSeedingStrategy.seed(bracket, players);
 
-        Match match = bracket.getFlowHandler().playNextMatch();
+        Match match = bracket.getFlowHandler().getNextMatch();
         Seat winnerSeat1 = match.getSeats().iterator().next();
         winnerSeat1.setId((long) winnerSeat1.getNumber());
         bracket.getFlowHandler().markAsPlayed(match.getId(), (long) winnerSeat1.getNumber());
 
-        Match match1 = bracket.getFlowHandler().playNextMatch();
+        Match match1 = bracket.getFlowHandler().getNextMatch();
         Seat winnerSeat2 = match1.getSeats().iterator().next();
         winnerSeat2.setId((long) winnerSeat2.getNumber());
         bracket.getFlowHandler().markAsPlayed(match1.getId(), (long) winnerSeat2.getNumber());
 
-        Match match2 = bracket.getFlowHandler().playNextMatch();
+        Match match2 = bracket.getFlowHandler().getNextMatch();
         Seat winnerSeat3 = match2.getSeats().iterator().next();
         winnerSeat3.setId((long) winnerSeat3.getNumber());
         bracket.getFlowHandler().markAsPlayed(match2.getId(), (long) winnerSeat3.getNumber());
@@ -62,22 +62,22 @@ public class SingleEliminationBracketTests {
         Set<User> players = LongStream.range(1, 5).mapToObj(p -> new User("Name", "Pass")).collect(Collectors.toSet());
         randomSeedingStrategy.seed(bracket, players);
 
-        Match match = bracket.getFlowHandler().playNextMatch();
+        Match match = bracket.getFlowHandler().getNextMatch();
         Seat winnerSeat1 = match.getSeats().iterator().next();
         winnerSeat1.setId((long) winnerSeat1.getNumber());
         bracket.getFlowHandler().markAsPlayed(match.getId(), (long) winnerSeat1.getNumber());
 
-        Match match1 = bracket.getFlowHandler().playNextMatch();
+        Match match1 = bracket.getFlowHandler().getNextMatch();
         Seat winnerSeat2 = match1.getSeats().iterator().next();
         winnerSeat2.setId((long) winnerSeat2.getNumber());
         bracket.getFlowHandler().markAsPlayed(match1.getId(), (long) winnerSeat2.getNumber());
 
-        Match match2 = bracket.getFlowHandler().playNextMatch();
+        Match match2 = bracket.getFlowHandler().getNextMatch();
         Seat winnerSeat3 = match2.getSeats().iterator().next();
         winnerSeat3.setId((long) winnerSeat3.getNumber());
         bracket.getFlowHandler().markAsPlayed(match2.getId(), (long) winnerSeat3.getNumber());
 
-        Match match3 = bracket.getFlowHandler().playNextMatch();
+        Match match3 = bracket.getFlowHandler().getNextMatch();
         Seat winnerSeat4 = match3.getSeats().iterator().next();
         winnerSeat4.setId((long) winnerSeat4.getNumber());
         bracket.getFlowHandler().markAsPlayed(match2.getId(), (long) winnerSeat3.getNumber());

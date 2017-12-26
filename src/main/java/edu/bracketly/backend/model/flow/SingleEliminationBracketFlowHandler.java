@@ -7,11 +7,7 @@ import edu.bracketly.backend.model.entity.match.Match;
 import edu.bracketly.backend.model.entity.match.Round;
 import edu.bracketly.backend.tree.Traverser;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class SingleEliminationBracketFlowHandler implements FlowHandler {
 
@@ -69,12 +65,11 @@ public class SingleEliminationBracketFlowHandler implements FlowHandler {
     }
 
     @Override
-    public Match playNextMatch() throws BracketIsPlayedException {
+    public Match getNextMatch() throws BracketIsPlayedException {
         List<Match> currentRound = bracket.getRounds().get(bracket.getCurrentRoundNumber() - 1).getMatches();
         Optional<Match> matchOptional = currentRound.stream().filter(match -> match.getMatchStatus() == MATCH_STATUS.NOT_PLAYED).findFirst();
         if (matchOptional.isPresent()) {
             Match match = matchOptional.get();
-            match.setMatchStatus(MATCH_STATUS.LIVE);
             return match;
         } else {
             if (currentRound.stream().anyMatch(match -> match.getMatchStatus() == MATCH_STATUS.LIVE)) {
@@ -82,7 +77,7 @@ public class SingleEliminationBracketFlowHandler implements FlowHandler {
             } else {
                 if (bracket.getBracketStatus() != BRACKET_STATUS.PLAYED) {
                     startNewRound();
-                    return playNextMatch();
+                    return getNextMatch();
                 } else throw new BracketIsPlayedException();
             }
         }
