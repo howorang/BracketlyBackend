@@ -3,9 +3,9 @@ package edu.bracketly.backend.model.entity.bracket;
 
 import edu.bracketly.backend.dto.BracketStateDto;
 import edu.bracketly.backend.dto.PlayerDto;
+import edu.bracketly.backend.dto.RoundDto;
 import edu.bracketly.backend.dto.SingleBracketStateDto;
 import edu.bracketly.backend.model.entity.match.Round;
-import edu.bracketly.backend.model.flow.FlowHandler;
 import edu.bracketly.backend.model.flow.SingleEliminationBracketFlowHandler;
 import edu.bracketly.backend.utlis.BracketUtils;
 import lombok.Data;
@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -41,7 +42,7 @@ public class SingleEliminationBracket extends Bracket {
     }
 
     @Override
-    public FlowHandler flowHandler() {
+    public SingleEliminationBracketFlowHandler flowHandler() {
         if (flowHandler == null) {
             flowHandler = new SingleEliminationBracketFlowHandler(this);
         }
@@ -55,6 +56,9 @@ public class SingleEliminationBracket extends Bracket {
         dto.setCurrentRound(currentRoundNumber);
         if (bracketRoot.getPlayer() != null) {
             dto.setWinner(PlayerDto.asDto(bracketRoot.getPlayer()));
+        }
+        if (getRounds() != null) {
+            dto.setRounds(getRounds().stream().map(RoundDto::asDto).collect(Collectors.toList()));
         }
         return dto;
     }

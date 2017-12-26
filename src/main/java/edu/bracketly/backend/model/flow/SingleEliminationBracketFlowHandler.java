@@ -16,7 +16,6 @@ public class SingleEliminationBracketFlowHandler implements FlowHandler {
     public SingleEliminationBracketFlowHandler(SingleEliminationBracket bracket) {
         this.bracket = bracket;
     }
-
     public void init() {
         initRounds(bracket);
     }
@@ -62,6 +61,16 @@ public class SingleEliminationBracketFlowHandler implements FlowHandler {
     @Override
     public List<Match> getAvailiableMatches() {
         return getCurrentRound();
+    }
+
+    @Override
+    public void startMatch(Long matchId) {
+        Optional<Match> matchOptional = getCurrentRound().stream().filter(match -> match.getId().equals(matchId)).findFirst();
+        if (matchOptional.isPresent()) {
+            Match match = matchOptional.get();
+            match.setMatchStatus(MATCH_STATUS.LIVE);
+        } else throw new RuntimeException("Match not found in current round");
+        updateBracketStatusIfNeeded();
     }
 
     @Override

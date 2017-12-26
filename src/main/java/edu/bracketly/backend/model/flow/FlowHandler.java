@@ -12,4 +12,6 @@ public interface FlowHandler {
     BRACKET_STATUS getBracketStatus();
 
     List<Match> getAvailiableMatches();
+
+    void startMatch(Long matchId);
 }

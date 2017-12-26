@@ -5,12 +5,7 @@ import edu.bracketly.backend.dto.MatchDto;
 import edu.bracketly.backend.service.BracketService;
 import edu.bracketly.backend.service.MatchService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,6 +29,11 @@ public class BracketController {
         matchService.playMatch(bracketId, matchId, winningSeatId);
     }
 
+    @PostMapping("/{bracketId}/start/{matchId}")
+    public void startMarch(@PathVariable Long bracketId, @PathVariable Long matchId) {
+        matchService.startMatch(bracketId, matchId);
+    }
+
     @GetMapping("/{bracketId}/match/available")
     public List<MatchDto> getAvailableMatchesForBracket(@PathVariable Long bracketId) {
         return matchService.getCurrentRoundMatchesForBracket(bracketId);
@@ -43,4 +43,5 @@ public class BracketController {
     public MatchDto getNextMatchForBracket(@PathVariable Long bracketId) {
         return matchService.getNextMatchForBracket(bracketId);
     }
+
 }

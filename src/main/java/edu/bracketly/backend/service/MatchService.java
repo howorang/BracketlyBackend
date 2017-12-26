@@ -61,4 +61,11 @@ public class MatchService {
                 .findFirst().get();
         rankingService.registerWin(winner, loser);
     }
+
+    public void startMatch(Long bracketId, Long matchId) {
+        Bracket bracket = bracketRepository.getOne(bracketId);
+        FlowHandler flowHandler = bracket.flowHandler();
+        flowHandler.startMatch(matchId);
+        bracketRepository.save(bracket);
+    }
 }
