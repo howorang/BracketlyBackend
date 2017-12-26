@@ -1,9 +1,6 @@
 package edu.bracketly.backend.service;
 
-import edu.bracketly.backend.dto.CreateTournamentDto;
-import edu.bracketly.backend.dto.EditTournamentDto;
-import edu.bracketly.backend.dto.TournamentSimpleDto;
-import edu.bracketly.backend.dto.TournamentStartResponseDto;
+import edu.bracketly.backend.dto.*;
 import edu.bracketly.backend.exception.NoPlayersException;
 import edu.bracketly.backend.exception.TournamentDoesNotExistException;
 import edu.bracketly.backend.exception.TournamentHasAlreadyBeenStartedException;
@@ -105,5 +102,13 @@ public class TournamentService {
         if (dto.getSeedingStrategy() != null) tournament.setSeeding_strategy(dto.getSeedingStrategy());
         if (dto.getEventDate() != null) tournament.setEventDate(dto.getEventDate());
         tournamentRepository.save(tournament);
+    }
+
+    public TournamentDto getTournamentDetails(Long tournamentId) {
+        Tournament tournament = tournamentRepository.findOne(tournamentId);
+        if (tournament == null) {
+            throw new TournamentDoesNotExistException("Tournament with id: " + tournamentId + " doesn't exist.");
+        }
+        return TournamentDto.asDto(tournament);
     }
 }
