@@ -31,10 +31,10 @@ public class TournamentDto {
         dto.setId(tournament.getId());
         dto.setName(tournament.getName());
         dto.setOrganizerId(tournament.getOrganizer().getId());
-        dto.setBracketType(tournament.getBracketType());
-        dto.setSeedingStrategy(tournament.getSeeding_strategy());
+        if (tournament.getBracketType() != null) dto.setBracketType(tournament.getBracketType());
+        if (tournament.getSeeding_strategy() != null) dto.setSeedingStrategy(tournament.getSeeding_strategy());
         dto.setTournamentStatus(tournament.getStatus());
-        dto.setBracketId(tournament.getBracket().getId());
+        if (tournament.getBracket() != null) dto.setBracketId(tournament.getBracket().getId());
         return dto;
     }
 }
