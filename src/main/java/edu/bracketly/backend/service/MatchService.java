@@ -1,6 +1,8 @@
 package edu.bracketly.backend.service;
 
 import edu.bracketly.backend.dto.MatchDto;
+import edu.bracketly.backend.exception.BracketDoesNotExistsException;
+import edu.bracketly.backend.exception.MatchDoesNotExistsException;
 import edu.bracketly.backend.model.entity.bracket.Bracket;
 import edu.bracketly.backend.model.entity.bracket.Seat;
 import edu.bracketly.backend.model.entity.match.Match;
@@ -27,6 +29,7 @@ public class MatchService {
     private RankingService rankingService;
 
     public List<MatchDto> getCurrentRoundMatchesForBracket(Long bracketId) {
+        checkIfBracketExists(bracketId);
         Bracket bracket = bracketRepository.getOne(bracketId);
         FlowHandler flowHandler = bracket.flowHandler();
         List<Match> matches = flowHandler.getAvailiableMatches();
@@ -34,6 +37,7 @@ public class MatchService {
     }
 
     public MatchDto getNextMatchForBracket(Long bracketId) {
+        checkIfBracketExists(bracketId);
         Bracket bracket = bracketRepository.getOne(bracketId);
         FlowHandler flowHandler = bracket.flowHandler();
         Match match = flowHandler.getNextMatch();
@@ -42,6 +46,8 @@ public class MatchService {
     }
 
     public void playMatch(Long bracketId, Long matchId, Long winningSeatId) {
+        checkIfBracketExists(bracketId);
+        checkIfMatchExists(matchId);
         Bracket bracket = bracketRepository.getOne(bracketId);
         FlowHandler flowHandler = bracket.flowHandler();
         flowHandler.markAsPlayed(matchId, winningSeatId);
@@ -50,6 +56,7 @@ public class MatchService {
     }
 
     private void updateRankings(Long matchId, Long winningSeatId) {
+        checkIfMatchExists(matchId);
         Match match = matchRepository.findOne(matchId);
         User winner = match.getSeats().stream()
                 .filter(seat -> seat.getId().equals(winningSeatId))
@@ -63,9 +70,23 @@ public class MatchService {
     }
 
     public void startMatch(Long bracketId, Long matchId) {
+        checkIfBracketExists(bracketId);
+        checkIfMatchExists(matchId);
         Bracket bracket = bracketRepository.getOne(bracketId);
         FlowHandler flowHandler = bracket.flowHandler();
         flowHandler.startMatch(matchId);
         bracketRepository.save(bracket);
+    }
+
+    private void checkIfBracketExists(Long bracketId) {
+        if (!bracketRepository.existsById(bracketId)) {
+            throw new BracketDoesNotExistsException("Bracket with id: " + bracketId + " does not exist");
+        }
+    }
+
+    private void checkIfMatchExists(Long matchId) {
+        if (!matchRepository.exists(matchId)) {
+            throw new MatchDoesNotExistsException("Match with id:" + matchId + " does not exist.");
+        }
     }
 }

@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BracketRepository extends JpaRepository<Bracket, Long> {
+    boolean existsById(Long id);
 }
