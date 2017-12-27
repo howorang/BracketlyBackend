@@ -52,6 +52,7 @@ public class SingleEliminationBracket extends Bracket {
         SingleBracketStateDto dto = new SingleBracketStateDto();
         dto.setBracket_status(bracketStatus);
         dto.setCurrentRound(currentRoundNumber);
+        dto.setRoundCount(getRounds().size());
         if (bracketRoot.getPlayer() != null) {
             dto.setWinner(PlayerDto.asDto(bracketRoot.getPlayer()));
         }
