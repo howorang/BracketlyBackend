@@ -1,7 +1,7 @@
 package edu.bracketly.backend.controller;
 
 import edu.bracketly.backend.dto.CreateUserDto;
-import edu.bracketly.backend.dto.UserDetailsDto;
+import edu.bracketly.backend.dto.UserDto;
 import edu.bracketly.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +22,7 @@ public class UserController {
     }
 
     @GetMapping("/me")
-    public UserDetailsDto aboutMe() {
+    public UserDto aboutMe() {
         return userService.getLoggedInUserDetails();
     }
 }

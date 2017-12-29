@@ -4,9 +4,7 @@ import edu.bracketly.backend.model.entity.user.Player;
 import lombok.Data;
 
 @Data
-public class PlayerDto {
-    private long id;
-    private String username;
+public class PlayerDto extends UserDto {
     private long rank;
 
     public static PlayerDto asDto(Player player) {
