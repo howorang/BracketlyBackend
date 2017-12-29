@@ -11,7 +11,7 @@ public class SeatDto {
     public static SeatDto asDto(Seat seat) {
         SeatDto dto = new SeatDto();
         dto.setId(seat.getId());
-        dto.setPlayer(PlayerDto.asDto(seat.getPlayer()));
+        if (seat.getPlayer() != null) dto.setPlayer(PlayerDto.asDto(seat.getPlayer()));
         return dto;
     }
 }
