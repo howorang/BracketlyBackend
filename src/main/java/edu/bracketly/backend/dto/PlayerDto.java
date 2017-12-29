@@ -6,6 +6,7 @@ import lombok.Data;
 @Data
 public class PlayerDto extends UserDto {
     private long rank;
+    private int gamesPlayed;
 
     public PlayerDto() {
         type = PlayerDto.class.getSimpleName();
@@ -16,6 +17,7 @@ public class PlayerDto extends UserDto {
         dto.setId(player.getId());
         dto.setUsername(player.getUsername());
         dto.setRank(player.getRank());
+        dto.setGamesPlayed(player.getGamesPlayed());
         return dto;
     }
 }
