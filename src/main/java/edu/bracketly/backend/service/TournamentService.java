@@ -111,4 +111,12 @@ public class TournamentService {
         }
         return TournamentDto.asDto(tournament);
     }
+
+    public List<PlayerDto> getTournament(Long tournamentId) {
+        Tournament tournament = tournamentRepository.findOne(tournamentId);
+        if (tournament == null) {
+            throw new TournamentDoesNotExistException("Tournament with id: " + tournamentId + " doesn't exist.");
+        }
+        return tournament.getPlayers().stream().map(PlayerDto::asDto).collect(Collectors.toList());
+    }
 }

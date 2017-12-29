@@ -48,4 +48,9 @@ public class TournamentController {
         tournamentService.modifyTournament(tournamentId, dto);
     }
 
+    @GetMapping("/{tournamentId}/players")
+    public List<PlayerDto> getTournamentPlayers(@PathVariable Long tournamentId) {
+        return tournamentService.getTournament(tournamentId);
+    }
+
 }
