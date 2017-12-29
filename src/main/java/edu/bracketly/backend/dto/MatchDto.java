@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public class MatchDto {
     private Long id;
     private String tag;
-    private List<SeatDto> players;
+    private List<SeatDto> seats;
     private MATCH_STATUS matchStatus;
 
     public static MatchDto asDto(Match match) {
@@ -19,7 +19,7 @@ public class MatchDto {
         dto.setId(match.getId());
         dto.setTag(match.getTag().toString());
         dto.setMatchStatus(match.getMatchStatus());
-        dto.setPlayers(match.getSeats().stream().map(SeatDto::asDto).collect(Collectors.toList()));
+        dto.setSeats(match.getSeats().stream().map(SeatDto::asDto).collect(Collectors.toList()));
         return dto;
     }
 }
