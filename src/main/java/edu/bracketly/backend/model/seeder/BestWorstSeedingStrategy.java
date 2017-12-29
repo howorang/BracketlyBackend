@@ -2,16 +2,16 @@ package edu.bracketly.backend.model.seeder;
 
 import edu.bracketly.backend.model.entity.bracket.Bracket;
 import edu.bracketly.backend.model.entity.bracket.Seat;
-import edu.bracketly.backend.model.entity.user.User;
+import edu.bracketly.backend.model.entity.user.Player;
 
 import java.util.*;
 
 public class BestWorstSeedingStrategy implements SeedingStrategy {
     @Override
-    public void seed(Bracket bracket, Set<User> players) {
-        List<User> playersSorted = new ArrayList<>();
-        playersSorted.sort((o1, o2) -> (int) (o1.getDetails().getRank() - o2.getDetails().getRank()));
-        Deque<User> playerDeque = new ArrayDeque<>(players);
+    public void seed(Bracket bracket, Set<Player> players) {
+        List<Player> playersSorted = new ArrayList<>();
+        playersSorted.sort((o1, o2) -> (int) (o1.getRank() - o2.getRank()));
+        Deque<Player> playerDeque = new ArrayDeque<>(players);
         players.clear();
         while (!playerDeque.isEmpty()) {
             players.add(playerDeque.pollLast());
@@ -19,7 +19,7 @@ public class BestWorstSeedingStrategy implements SeedingStrategy {
         }
 
         Iterator<Seat> playerSlotIterator = bracket.getStartingSeatsInPlayingOrder().iterator();
-        for (User player : players) {
+        for (Player player : players) {
             playerSlotIterator.next().setPlayer(player);
         }
     }

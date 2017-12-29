@@ -5,9 +5,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
 @Data
@@ -15,14 +15,12 @@ import javax.persistence.Table;
 @Entity
 @NoArgsConstructor
 @Table(name = "user_t")
-public class User extends BaseEntity {
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class User extends BaseEntity {
 
     private String username;
 
     private String password;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    private UserDetails details;
 
     public User(String username, String password) {
         this.username = username;

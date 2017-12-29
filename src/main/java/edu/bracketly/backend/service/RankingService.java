@@ -1,7 +1,7 @@
 package edu.bracketly.backend.service;
 
 import edu.bracketly.backend.model.entity.user.K_FACTOR;
-import edu.bracketly.backend.model.entity.user.User;
+import edu.bracketly.backend.model.entity.user.Player;
 import edu.bracketly.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,16 +20,16 @@ public class RankingService {
     @Autowired
     private UserRepository userRepository;
 
-    public void registerWin(User winner, User loser) {
+    public void registerWin(Player winner, Player loser) {
         updateScore(winner, WINNER_SCORE, loser, LOSER_SCORE);
     }
 
-    private void updateScore(User one, int oneScore, User two, int twoScore) {
+    private void updateScore(Player one, int oneScore, Player two, int twoScore) {
         incrementGamesPlayed(one);
         incrementGamesPlayed(two);
 
-        long oneRank = one.getDetails().getRank();
-        long twoRank = two.getDetails().getRank();
+        long oneRank = one.getRank();
+        long twoRank = two.getRank();
 
         double qOne = Math.pow(10, (oneRank / 400));
         double qTwo = Math.pow(10, (twoRank / 400));
@@ -37,11 +37,11 @@ public class RankingService {
         double eOne = qOne / (qOne + qTwo);
         double eTwp = qTwo / (qOne + qTwo);
 
-        double adjustedOneRank = oneRank + one.getDetails().getKFactor().value * (oneScore - eOne);
-        double adjustedTwoRank = twoRank + two.getDetails().getKFactor().value * (twoScore - eTwp);
+        double adjustedOneRank = oneRank + one.getKFactor().value * (oneScore - eOne);
+        double adjustedTwoRank = twoRank + two.getKFactor().value * (twoScore - eTwp);
 
-        one.getDetails().setRank((long) adjustedOneRank);
-        two.getDetails().setRank((long) adjustedTwoRank);
+        one.setRank((long) adjustedOneRank);
+        two.setRank((long) adjustedTwoRank);
 
         updateKFactorIfNeeded(one);
         updateKFactorIfNeeded(two);
@@ -49,19 +49,19 @@ public class RankingService {
         userRepository.save(Arrays.asList(one, two));
     }
 
-    private void updateKFactorIfNeeded(User user) {
-        K_FACTOR kFactor = user.getDetails().getKFactor();
+    private void updateKFactorIfNeeded(Player player) {
+        K_FACTOR kFactor = player.getKFactor();
         if (kFactor == K_FACTOR.PRO) return;
-        if (kFactor == K_FACTOR.BEGGINER && user.getDetails().getGamesPlayed() >= AVERAGE_GAMES_THRESHOLD) {
-            user.getDetails().setKFactor(K_FACTOR.AVERAGE);
+        if (kFactor == K_FACTOR.BEGGINER && player.getGamesPlayed() >= AVERAGE_GAMES_THRESHOLD) {
+            player.setKFactor(K_FACTOR.AVERAGE);
         }
-        if (kFactor == K_FACTOR.AVERAGE && user.getDetails().getRank() > PRO_RANK_THRESHOLD) {
-            user.getDetails().setKFactor(K_FACTOR.PRO);
+        if (kFactor == K_FACTOR.AVERAGE && player.getRank() > PRO_RANK_THRESHOLD) {
+            player.setKFactor(K_FACTOR.PRO);
         }
     }
 
-    private void incrementGamesPlayed(User user) {
-        user.getDetails().setGamesPlayed(user.getDetails().getGamesPlayed() + 1);
+    private void incrementGamesPlayed(Player player) {
+        player.setGamesPlayed(player.getGamesPlayed() + 1);
     }
 
 }

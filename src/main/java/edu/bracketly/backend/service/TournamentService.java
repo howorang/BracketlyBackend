@@ -6,7 +6,7 @@ import edu.bracketly.backend.exception.TournamentDoesNotExistException;
 import edu.bracketly.backend.exception.TournamentHasAlreadyBeenStartedException;
 import edu.bracketly.backend.exception.WrongUserException;
 import edu.bracketly.backend.model.entity.Tournament;
-import edu.bracketly.backend.model.entity.user.User;
+import edu.bracketly.backend.model.entity.user.Player;
 import edu.bracketly.backend.model.flow.TOURNAMENT_STATUS;
 import edu.bracketly.backend.repository.TournamentRepository;
 import org.apache.commons.lang3.StringUtils;
@@ -53,7 +53,7 @@ public class TournamentService {
         if (tournament == null) {
             throw new TournamentDoesNotExistException("Tournament with id: " + tournamentId + " doesn't exist.");
         }
-        Set<User> players = tournament.getPlayers();
+        Set<Player> players = tournament.getPlayers();
         players.add(userService.getCurrentUser());
         tournamentRepository.save(tournament);
     }

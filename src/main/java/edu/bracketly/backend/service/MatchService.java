@@ -6,7 +6,7 @@ import edu.bracketly.backend.exception.MatchDoesNotExistsException;
 import edu.bracketly.backend.model.entity.bracket.Bracket;
 import edu.bracketly.backend.model.entity.bracket.Seat;
 import edu.bracketly.backend.model.entity.match.Match;
-import edu.bracketly.backend.model.entity.user.User;
+import edu.bracketly.backend.model.entity.user.Player;
 import edu.bracketly.backend.model.flow.FlowHandler;
 import edu.bracketly.backend.repository.BracketRepository;
 import edu.bracketly.backend.repository.MatchRepository;
@@ -58,11 +58,11 @@ public class MatchService {
     private void updateRankings(Long matchId, Long winningSeatId) {
         checkIfMatchExists(matchId);
         Match match = matchRepository.findOne(matchId);
-        User winner = match.getSeats().stream()
+        Player winner = match.getSeats().stream()
                 .filter(seat -> seat.getId().equals(winningSeatId))
                 .map(Seat::getPlayer)
                 .findFirst().get();
-        User loser = match.getSeats().stream()
+        Player loser = match.getSeats().stream()
                 .filter(seat -> !seat.getId().equals(winningSeatId))
                 .map(Seat::getPlayer)
                 .findFirst().get();

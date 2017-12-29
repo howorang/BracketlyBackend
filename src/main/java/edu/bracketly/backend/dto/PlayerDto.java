@@ -1,6 +1,6 @@
 package edu.bracketly.backend.dto;
 
-import edu.bracketly.backend.model.entity.user.User;
+import edu.bracketly.backend.model.entity.user.Player;
 import lombok.Data;
 
 @Data
@@ -9,11 +9,11 @@ public class PlayerDto {
     private String username;
     private long rank;
 
-    public static PlayerDto asDto(User user) {
+    public static PlayerDto asDto(Player player) {
         PlayerDto dto = new PlayerDto();
-        dto.setId(user.getId());
-        dto.setUsername(user.getUsername());
-        dto.setRank(user.getDetails().getRank());
+        dto.setId(player.getId());
+        dto.setUsername(player.getUsername());
+        dto.setRank(player.getRank());
         return dto;
     }
 }

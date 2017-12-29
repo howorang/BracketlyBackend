@@ -1,7 +1,7 @@
 package edu.bracketly.backend.model.entity.bracket;
 
 import edu.bracketly.backend.model.entity.BaseEntity;
-import edu.bracketly.backend.model.entity.user.User;
+import edu.bracketly.backend.model.entity.user.Player;
 import edu.bracketly.backend.tree.Node;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -21,7 +21,7 @@ import java.util.List;
 public class Seat extends BaseEntity implements Node {
 
     @OneToOne
-    private User player;
+    private Player player;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Seat> children;

@@ -1,7 +1,6 @@
 package edu.bracketly.backend.configuration;
 
-import edu.bracketly.backend.model.entity.user.User;
-import edu.bracketly.backend.model.entity.user.UserDetails;
+import edu.bracketly.backend.model.entity.user.Player;
 import edu.bracketly.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -21,18 +20,15 @@ public class InitialDataLoader implements ApplicationListener<ApplicationReadyEv
     @Override
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
         if (userRepository.existsByUsername("test")) return;
-        User test = new User();
+        Player test = new Player();
         test.setUsername("test");
         test.setPassword(passwordEncoder.encode("test"));
-        UserDetails userDetails = new UserDetails();
-        test.setDetails(userDetails);
+        ;
         userRepository.save(test);
 
-        User howo = new User();
+        Player howo = new Player();
         howo.setUsername("howo");
         howo.setPassword(passwordEncoder.encode("test"));
-        UserDetails userDetails2 = new UserDetails();
-        howo.setDetails(userDetails2);
         userRepository.save(howo);
     }
 

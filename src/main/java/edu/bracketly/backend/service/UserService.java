@@ -2,8 +2,8 @@ package edu.bracketly.backend.service;
 
 import edu.bracketly.backend.dto.UserDetailsDto;
 import edu.bracketly.backend.exception.UserAlreadyExistsException;
+import edu.bracketly.backend.model.entity.user.Player;
 import edu.bracketly.backend.model.entity.user.User;
-import edu.bracketly.backend.model.entity.user.UserDetails;
 import edu.bracketly.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,17 +25,15 @@ public class UserService {
             throw new UserAlreadyExistsException("User with name " + username + "already exists.");
         }
 
-        User newUser = new User();
+        Player newUser = new Player();
         newUser.setUsername(username);
         newUser.setPassword(passwordEncoder.encode(password));
-        UserDetails details = new UserDetails();
-        newUser.setDetails(details);
         userRepository.save(newUser);
     }
 
-    public User getCurrentUser() {
+    public <T extends User> T getCurrentUser() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        return userRepository.findByUsername(username);
+        return (T) userRepository.findByUsername(username);
     }
 
     private boolean userExists(String username) {
@@ -43,9 +41,9 @@ public class UserService {
     }
 
     public UserDetailsDto getLoggedInUserDetails() {
-        User currentUser = getCurrentUser();
+        Player currentUser = getCurrentUser();
         UserDetailsDto dto = new UserDetailsDto();
-        dto.setRank(currentUser.getDetails().getRank());
+        dto.setRank(currentUser.getRank());
         dto.setUser(currentUser.getUsername());
         return dto;
     }

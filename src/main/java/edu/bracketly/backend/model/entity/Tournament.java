@@ -1,6 +1,7 @@
 package edu.bracketly.backend.model.entity;
 
 import edu.bracketly.backend.model.entity.bracket.Bracket;
+import edu.bracketly.backend.model.entity.user.Player;
 import edu.bracketly.backend.model.entity.user.User;
 import edu.bracketly.backend.model.flow.TOURNAMENT_STATUS;
 import lombok.Data;
@@ -18,7 +19,7 @@ public class Tournament extends BaseEntity {
     String name;
 
     @ManyToMany
-    private Set<User> players;
+    private Set<Player> players;
 
     @ManyToOne
     private User organizer;
