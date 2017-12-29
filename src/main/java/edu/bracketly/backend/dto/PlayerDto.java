@@ -7,6 +7,10 @@ import lombok.Data;
 public class PlayerDto extends UserDto {
     private long rank;
 
+    public PlayerDto() {
+        type = PlayerDto.class.getSimpleName();
+    }
+
     public static PlayerDto asDto(Player player) {
         PlayerDto dto = new PlayerDto();
         dto.setId(player.getId());
