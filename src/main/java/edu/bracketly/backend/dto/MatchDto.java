@@ -13,6 +13,7 @@ public class MatchDto {
     private String tag;
     private List<SeatDto> seats;
     private MATCH_STATUS matchStatus;
+    private PlayerDto winner;
 
     public static MatchDto asDto(Match match) {
         MatchDto dto = new MatchDto();
@@ -20,6 +21,9 @@ public class MatchDto {
         dto.setTag(match.getTag().toString());
         dto.setMatchStatus(match.getMatchStatus());
         dto.setSeats(match.getSeats().stream().map(SeatDto::asDto).collect(Collectors.toList()));
+        if (match.getWinnerSeat().getPlayer() != null) {
+            dto.setWinner(PlayerDto.asDto(match.getWinnerSeat().getPlayer()));
+        }
         return dto;
     }
 }
