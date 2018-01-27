@@ -88,7 +88,7 @@ public class TournamentService {
         Pageable pageable = new PageRequest(page, size, direction, field);
         Page<Tournament> tournaments = tournamentRepository.findAll(pageable);
         return tournaments.getContent().stream()
-                .map(tournament -> new TournamentSimpleDto(tournament.getId(), tournament.getName(), tournament.getCreationDate(), tournament.getEventDate()))
+                .map(TournamentSimpleDto::asDto)
                 .collect(Collectors.toList());
     }
 
