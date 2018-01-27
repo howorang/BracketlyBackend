@@ -29,6 +29,7 @@ public class TournamentSimpleDto {
         dto.setCreationDate(tournament.getCreationDate());
         dto.setEventDate(tournament.getEventDate());
         dto.setTournamentStatus(tournament.getStatus());
+        dto.setOrganizerId(tournament.getOrganizer().getId());
         return dto;
     }
 }
