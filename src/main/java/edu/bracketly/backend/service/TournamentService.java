@@ -69,8 +69,8 @@ public class TournamentService {
         if (!tournament.getOrganizer().equals(userService.getCurrentUser())) {
             throw new WrongUserException("Attempted to start tournament while not being it's orginizer.");
         }
-        if (tournament.getPlayers().isEmpty()) {
-            throw new NoPlayersException("No players have joined tournament with id: " + tournamentId + " cannot start");
+        if (tournament.getPlayers().size() < 2) {
+            throw new NoPlayersException("You need at least two players to start");
         }
         tournament.setStatus(TOURNAMENT_STATUS.LIVE);
         tournament.setBracket(bracketService.initBracket(tournament));
